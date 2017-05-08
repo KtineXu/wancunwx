@@ -1,0 +1,95 @@
+package com.chemguan.controller;
+
+import java.util.List;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.chemguan.entity.WorksComment;
+import com.chemguan.service.WorksCommentService;
+import com.chemguan.service.WorksService;
+import com.chemguan.tool.Tools;
+
+@Controller
+public class WorksCommentController {
+	
+	@Resource
+	WorksCommentService wcService;
+	
+	@Resource
+	WorksService wService;
+	
+	@Resource
+	Tools tools;
+	
+	/**
+	 *查所有 
+	 */
+	@RequestMapping("findAllWorksComment.do")
+	public String findAllWorks(HttpServletResponse response,HttpServletRequest request){
+		List<WorksComment> wcList = wcService.findAllWorksComment();
+		request.setAttribute("list", wcList);
+		return "chemguanpanel/worksComment.jsp";
+		
+	}
+	
+	/**
+	 *根据id删除 
+	 */
+	@RequestMapping("deleteWorksCommentById.do")
+	public String deleteWorksById(HttpServletResponse response,HttpServletRequest request){
+		int id = Integer.parseInt(request.getParameter("id"));
+		wcService.deleteWorksCommentById(id);
+		return "findAllWorksComment.do";
+		
+	}
+	
+	/**
+	 *批量删除 
+	 */
+	@RequestMapping("deleteWorksComment.do")
+	public String deleteWorks(HttpServletResponse response,HttpServletRequest request,String map){
+		List list = tools.split(map);
+		wcService.deleteWorksComment(list);
+		return "findAllWorksComment.do";
+		
+		
+	}
+	
+	/**
+	 *根据worksId查询所有评论 
+	 */
+	@RequestMapping("findWorksCommentByWorksId.do")
+	public String findWorksCommentByWorksId(HttpServletResponse response,HttpServletRequest request){
+		int worksId = Integer.parseInt(request.getParameter("worksId"));
+		List<WorksComment> wcList = wcService.findWorksCommentByWorksId(worksId);
+		request.setAttribute("list", wcList);
+		
+		int worksType = wService.findWorksById(worksId).getWorksType();
+		if(worksType == 1){
+			return "workDetail-image.jsp";
+		}else if(worksType == 2){
+			return "workDetail-video.jsp";
+		}
+		return null;
+		
+	}
+	
+//	/**
+//	 *根据作品id查询评论总数 
+//	 */
+//	@RequestMapping("countByWorksId.do")
+//	public String countByWorksId(HttpServletResponse response,HttpServletRequest request){
+//		int worksId = Integer.parseInt(request.getParameter("worksId")); 
+//		int count = wcService.countByWorksId(worksId);
+//		request.setAttribute("count", count);
+//		return "";
+//		
+//	}
+	
+
+}

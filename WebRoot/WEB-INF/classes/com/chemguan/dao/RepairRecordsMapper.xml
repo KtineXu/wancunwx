@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "http://mybatis.org/dtd/mybatis-3-mapper.dtd" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.chemguan.dao.RepairRecordsDao">
+
+	<!-- 查询所有信息 -->
+	<select id = "findAllRepairRecords" resultType = "com.chemguan.entity.RepairRecords">
+		select * from repairRecords where 1=1 order by id desc
+		
+	</select>
+	
+	<!-- 新增信息 -->
+	<insert id = "addRepairRecords" parameterType="com.chemguan.entity.RepairRecords">
+		<selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+			select LAST_INSERT_ID()
+		</selectKey>
+		insert into repairRecords (productName,courierName,courierNumber,userID,addDate,remark,productId) values
+		(#{productName},#{courierName},#{courierNumber},#{userID},#{addDate},#{remark},#{productId})
+	</insert>
+	
+	<!-- 根据ID查询信息 -->
+	<select id = "findRepairRecordsById" parameterType="java.lang.Integer" resultType = "com.chemguan.entity.RepairRecords">
+		select * from repairRecords where id = #{0}
+	</select>
+	
+	<!-- 根据ID修改信息 -->
+	<update id ="updateRepairRecordsById">
+		update repairRecords set productName = #{productName},courierName = #{courierName},courierNumber = #{courierNumber},userID = #{userID},
+		addDate = #{addDate},remark = #{remark} where id = #{id}
+		
+	</update>
+	
+	<!-- 根据ID删除信息 -->
+	<delete id = "deleteRepairRecordsById" parameterType="java.lang.Integer">
+		delete from repairRecords where id = #{0}
+	</delete>
+	
+	<!-- 批量删除信息 -->
+	<delete id = "deleteRepairRecords">
+		delete from repairRecords where id in
+		<foreach collection="list" open="(" close=")" separator="," item="aa">#{aa}</foreach>
+	</delete>
+	
+	<!-- 根据userid的字段查询出repairRecords的list 集合 -->
+	<select id="findByUserId" parameterType="java.lang.Integer" resultType="com.chemguan.entity.RepairRecords">
+		select * from repairRecords r where r.userId = #{id}
+	</select>
+		
+</mapper>

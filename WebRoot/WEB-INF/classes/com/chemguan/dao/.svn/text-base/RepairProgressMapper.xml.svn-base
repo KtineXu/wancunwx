@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "http://mybatis.org/dtd/mybatis-3-mapper.dtd" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.chemguan.dao.RepairProgressDao">
+
+	<!-- 查询所有信息 -->
+	<select id = "findAllRepairProgress" resultType = "com.chemguan.entity.RepairProgress">
+		select * from repairProgress where 1=1 order by id desc
+	</select>
+	
+	<!-- 新增信息 -->
+	<insert id = "addRepairProgress" parameterType="com.chemguan.entity.RepairProgress">
+		insert into repairProgress (repairID,addDate,description) values
+		(#{repairId},#{addDate},#{description})
+	</insert>
+	
+	<!-- 根据ID查询信息 -->
+	<select id = "findRepairProgressById" parameterType="java.lang.Integer" resultType = "com.chemguan.entity.RepairProgress">
+		select * from repairProgress where id = #{0} order by id desc
+	</select>
+	
+	<!-- 根据ID修改信息 -->
+	<update id ="updateRepairProgressById">
+		update repairProgress set repairID = #{repairId},addDate = #{addDate},description = #{description} where id = #{id}	
+	</update>
+	
+	<!-- 根据ID删除信息 -->
+	<delete id = "deleteRepairProgressById" parameterType="java.lang.Integer">
+		delete from repairProgress where id = #{0}
+	</delete>
+	
+	<!-- 批量删除信息 -->
+	<delete id = "deleteRepairProgress">
+		delete from repairProgress where id in
+		<foreach collection="list" open="(" close=")" separator="," item="aa">#{aa}</foreach>
+	</delete>
+	
+	<!-- 根据repairId查询一个repairProgress -->
+	<select id="findByRepairId" parameterType="java.lang.Integer" resultType="com.chemguan.entity.RepairProgress">
+		select * from RepairProgress r where r.repairID = #{repairId} order by id desc;
+	</select>
+</mapper>

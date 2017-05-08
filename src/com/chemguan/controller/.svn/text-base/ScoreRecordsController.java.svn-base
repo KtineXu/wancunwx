@@ -1,0 +1,109 @@
+package com.chemguan.controller;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.chemguan.entity.ScoreRecords;
+import com.chemguan.entity.UserScore;
+import com.chemguan.entity.Users;
+import com.chemguan.service.ScoreRecordsService;
+import com.chemguan.service.UsersService;
+import com.chemguan.tool.Tools;
+
+
+/**
+ * 积分的控制类
+ * @author 郭胜
+ *
+ */
+@Controller
+public class ScoreRecordsController {
+
+	@Resource
+	private ScoreRecordsService scoreRecordsServiceImpl;
+	@Resource 
+	private UsersService usersServiceImpl;
+	@Resource
+	private Tools tools;
+	
+	/**
+	 * 写后台功能，积分查询所有的积分信息,详情页
+	 */
+	@RequestMapping("findAllScoreRecords.do")
+	public String findAllScoreRecords(HttpServletRequest request,HttpServletResponse response){
+		int id = Integer.parseInt(request.getParameter("id"));
+		List<ScoreRecords> list = new ArrayList<ScoreRecords>();
+		list = scoreRecordsServiceImpl.findByUserId(id);
+		List<UserScore> scoreList = new ArrayList<UserScore>();
+		for (ScoreRecords sr : list) {
+			int userId = sr.getUserID();
+			Users user = new Users();
+			user = usersServiceImpl.findUsersById(userId);
+			UserScore us = new UserScore();
+			us.setScoreRecords(sr);
+			us.setUsers(user);
+			scoreList.add(us);
+		}
+		request.setAttribute("scoreList", scoreList);
+		return "chemguanpanel/scoreRecordsList.jsp";
+	}
+	
+	/**
+	 * 前台页面查询我的积分功能
+	 */
+	@RequestMapping("behindFindScoreRecords.do")
+	public String behindFindScoreRecords(HttpServletRequest request,HttpServletResponse response){
+		//要查询积分表scoreRecords 根据用户id查询，即userid
+		int id = Integer.parseInt(request.getParameter("id"));
+		List<ScoreRecords> scoreList = new ArrayList<ScoreRecords>();
+		scoreList = scoreRecordsServiceImpl.findByUserId(id);
+		request.setAttribute("scoreList", scoreList);
+		//还要为页面显示一个登录用户
+		Users u = usersServiceImpl.findUsersById(id);
+		request.setAttribute("us", u);
+		return "scoreCenter.jsp";
+	}
+
+	/**
+	 * 后台积分管理的首页,查看用户积分
+	 */
+	@RequestMapping("findUsersScore.do")
+	public String findUsersScore(HttpServletRequest request,HttpServletResponse response){
+		List<Users> userList = new ArrayList<Users>();
+		userList = usersServiceImpl.findAllUsers();
+		request.setAttribute("userList", userList);
+		return "chemguanpanel/scoreManager.jsp";
+	}
+
+	/**
+	 * 后台积分管理的详情页，批量删除
+	 */
+	@RequestMapping("deleteByMany.do")
+	public String deleteByMany(HttpServletRequest request,HttpServletResponse response,String map){
+		List list = tools.split(map);
+		scoreRecordsServiceImpl.deleteScoreRecords(list);
+		String id = request.getParameter("id");
+		return "findAllScoreRecords.do?id="+id;
+	}
+	
+	/**
+	 * 后台积分管理的详情页，单个删除
+	 */
+	@RequestMapping("deleteByscoreRecordsId.do")
+	public String deleteByscoreRecordsId(HttpServletRequest request,HttpServletResponse response){
+		int scoresid = Integer.parseInt(request.getParameter("scoresid"));
+		int id = Integer.parseInt(request.getParameter("id"));
+		scoreRecordsServiceImpl.deleteScoreRecordsById(scoresid);
+		return "findAllScoreRecords.do?id="+id;
+	}
+	
+}

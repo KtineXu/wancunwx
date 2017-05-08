@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chemguan.dao.ProducttypeMapper" >
+  
+  <!-- 查询所有商品类型 -->
+  <select id="findAllProductTypeMapper" resultType="com.chemguan.po.Producttype">
+  	select * from producttype
+  </select>
+  
+  <!-- 根据产品类型的id查询产品类型 -->
+  <select id="findProductTypeById" parameterType="java.lang.Integer" resultType="com.chemguan.po.Producttype">
+  	select * from producttype where id = #{id}
+  </select>
+  
+  <!-- 分页查询产品的类型 -->
+  <select id="findProductTypeByPageBean" parameterType="java.util.Map" resultType="com.chemguan.po.Producttype">
+  	select * from producttype 
+  	<if test="start != null">
+  		limit #{start},4
+  	</if>
+  </select>
+  
+  <!-- 插入一条产品类型信息 -->
+  <insert id="insertProductType" parameterType="com.chemguan.po.Producttype">
+  	insert into producttype 
+  	(typename,description,image)
+  	values
+  	(#{typename},#{description},#{image})
+  </insert>
+  
+  <!-- 根据id删除产品类别信息 -->
+  <delete id="deleteProductTypeById" parameterType="java.lang.Integer">
+  	delete from producttype where id = #{id}
+  </delete>
+  
+  <!-- 修改一个产品类别信息 -->
+  <update id="updateProductType" parameterType="com.chemguan.po.Producttype">
+  	update producttype set
+  	typename = #{typename},
+  	description = #{description},
+  	image = #{image}
+  	where id = #{id}
+  </update>
+  
+</mapper>

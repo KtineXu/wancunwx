@@ -1,0 +1,71 @@
+package com.chemguan.controller;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.Map;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.chemguan.entity.MyOrders;
+import com.chemguan.entity.Users;
+import com.chemguan.service.UsersService;
+import com.chemguan.service.impl.MyOrdersServiceImpl;
+
+@Controller
+public class MyOrdersController {
+
+	@Resource
+	private MyOrdersServiceImpl myordersservice;
+	@Resource
+	private UsersService userservice;
+	@Resource
+	private UsersService uService;
+	
+	
+	/**
+	 * 按用户id去查询订单
+	 */
+	@RequestMapping("findAllOrders.do")
+	public String findAllOrders(HttpServletRequest request,HttpServletResponse response){
+//		Integer idd=(Integer)request.getSession().getAttribute("id");
+//		String id=request.getParameter("id");
+//		Integer idd=Integer.parseInt(id);
+		HttpSession session = request.getSession();
+		String openID = (String) session.getAttribute("openID");
+		Users use = userservice.findUsersByoppId(openID);
+		List<MyOrders> myprders=myordersservice.findAllOrders(use);
+		request.setAttribute("myprders", myprders);
+		return "myOrder.jsp";
+	}
+	/**
+	 * 产品详情
+	 */
+	@RequestMapping("findScore.do")
+	public Map<String, Object> findScore(HttpServletRequest request,HttpServletResponse response){
+		//String id=request.getParameter("id");
+		//Integer idd=Integer.parseInt(id);
+		//Integer idd=(Integer)request.getSession().getAttribute("id");
+		Map<String, Object> score=myordersservice.findAllid(26);
+		request.setAttribute("score", score);
+		return score;
+	}
+	
+	@RequestMapping("findOrder.do")
+	public String findOrder(HttpServletRequest request,HttpServletResponse response)
+	{
+		
+		findAllOrders(request, response);
+		findScore(request, response);
+		return "myOrder.jsp";
+		
+	}
+	
+	
+}

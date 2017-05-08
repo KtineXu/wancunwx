@@ -1,0 +1,138 @@
+package com.chemguan.controller;
+
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.chemguan.entity.Columns;
+import com.chemguan.entity.ForumReply;
+import com.chemguan.entity.Forums;
+import com.chemguan.entity.Users;
+import com.chemguan.service.ColumnsService;
+import com.chemguan.service.ForumReplyService;
+import com.chemguan.service.ForumsService;
+import com.chemguan.service.UsersService;
+@Controller
+@Scope("prototype")
+public class ForumController {
+	
+	@Resource
+	private ColumnsService columnservice;
+	
+	@Resource
+	private ForumsService forumsService;
+	
+	@Resource
+	private ForumReplyService forumReplyService;
+	
+	@Resource
+	private UsersService usersService;
+	
+	//论坛首页
+	@RequestMapping("forumindex.do")
+	public String AddColumn(HttpServletRequest request,HttpServletResponse response) throws Exception{	
+		HttpSession session = request.getSession();
+		String openID = (String) session.getAttribute("openID");
+		Users use = usersService.findUsersByoppId(openID);
+		if(use==null){
+			response.sendRedirect("https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx38b32f527759debd&redirect_uri=http%3A%2F%2Fxiguashu.jiriweb.com%2FgetUser.do?reurl=forumindex.do&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect");
+		}
+		
+		
+		//查询故事汇下面的子栏目     		
+		List<Columns> onelist= columnservice.findColumnsByParentId(1);		
+		for(int i=0;i<onelist.size();i++){
+			//子栏目下的子栏目
+			List<Columns> twolist=null;
+			twolist=columnservice.findColumnsByParentId(onelist.get(i).getId());
+			onelist.get(i).setList(twolist);
+		}
+		for(int i=0;i<onelist.size();i++){
+			System.out.println(onelist.get(i).getColumnName());
+			for(int j=0;j<onelist.get(i).getList().size();j++){
+				System.out.println(onelist.get(i).getList().get(j).getColumnName());
+			}
+		}
+		request.setAttribute("onelist", onelist);		
+		return "forumIndex.jsp";
+	}
+	
+	
+	//论坛列表
+	@RequestMapping("forumlist.do")
+	public String forumlist(HttpServletRequest request,int columid){	
+		SimpleDateFormat form = new SimpleDateFormat("yyyy-MM-dd");
+		List<Forums> findAllForums = forumsService.findAllForumsbycolum(columid);
+		if(findAllForums.size()!=0){
+		for(int i=0;i<findAllForums.size();i++){
+			Users user = usersService.findUsersById(findAllForums.get(i).getUserId());			
+			findAllForums.get(i).setName(user.getNickName());
+			findAllForums.get(i).setAdddatetime(form.format(findAllForums.get(i).getAddDate()));			
+			}
+		}
+		Columns colum = columnservice.findColumnsById(columid);
+		request.setAttribute("colum", colum);
+		request.setAttribute("list", findAllForums);
+		return "forumList.jsp";
+	}
+	
+	
+	//论坛详情
+	@RequestMapping("forumdetail.do")
+	public String forumdetail(HttpServletRequest request,int id){	
+		SimpleDateFormat form = new SimpleDateFormat("yyyy-MM-dd");
+		Forums forumdetail = forumsService.findForumsById(id);
+		Users user = usersService.findUsersById(forumdetail.getUserId());
+		forumdetail.setAdddatetime(form.format(forumdetail.getAddDate()));	
+		List<ForumReply> forumlist = forumReplyService.findForumReplyByforumId(forumdetail.getId());
+		for(int i=0;i<forumlist.size();i++){
+			Users user1 = usersService.findUsersById(forumlist.get(i).getUserId());
+			if(user1!=null){
+				forumlist.get(i).setName(user1.getNickName());	
+			}
+			forumlist.get(i).setAdddatetime(form.format(forumlist.get(i).getAddDate()));
+		}
+		
+		request.setAttribute("forumdetail", forumdetail);
+		request.setAttribute("user", user);
+		request.setAttribute("forumlist", forumlist);
+		return "forumDetail.jsp";
+	}
+	
+	
+	
+	//论坛主题回复
+	@RequestMapping("forumreplay.do")
+	public String forumreplay(HttpServletRequest request,HttpServletResponse response,int id)throws Exception {	
+		HttpSession session = request.getSession();
+		String openID = (String) session.getAttribute("openID");
+		Users use = usersService.findUsersByoppId(openID);
+		if(use==null){
+			response.sendRedirect("https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx38b32f527759debd&redirect_uri=http%3A%2F%2Fxiguashu.jiriweb.com%2FgetUser.do&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect");
+		}
+		ForumReply w=new ForumReply();
+		w.setDetail(request.getParameter("forumreplay"));
+		w.setForumId(id);
+		//待登陆做完修改
+		w.setUserId(use.getId());
+		forumReplyService.addForumReply(w);
+		return "forumdetail.do?id="+id;
+	}
+	
+	/**
+	 * 前台功能：前台产品分页
+	 */
+	
+	
+}

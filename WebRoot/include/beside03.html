@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<div class="beside">
+    <div class="nav-side">
+        <h5><b><img src="images/xin01.png"></b>质量服务</h5>
+        <i></i>
+    </div>
+    <ul class="list-side">
+        <li><a href="findQualityInfoById.do?id=47">质检系统<b class="up"><img src="images/side03.png"></b> </a></li>
+        <li><a href="findQualityInfoById.do?id=48">环保安全<b class="up"><img src="images/side03.png"></b> </a></li>
+    </ul>
+    <ul class="list-side2">
+        <li>
+            <a href="findColumnInfoById.do?id=51">
+                <em><img src="images/side4.png"><img src="images/side4-on.png"></em>
+                <p>企业实力</p>
+            </a>
+        </li>
+        <li>
+            <a href="findHrInfoById.do">
+                <em><img src="images/side5.png"><img src="images/side5-on.png"></em>
+                <p>人才招聘</p>
+            </a>
+        </li>
+        <li>
+            <a href="connectionOur.jsp">
+                <em><img src="images/side6.png"><img src="images/side6-on.png"></em>
+                <p>联系我们</p>
+            </a>
+        </li>
+    </ul>
+    <div class="nav-side">
+        <h5><b><img src="images/xin01.png"></b>新闻资讯</h5>
+        <i></i>
+    </div>
+    <div class="list-side3">
+        <em><img src="${news.imgURL }"></em>
+        <dl>
+            <dt>${news.title } </dt>
+            <dd>${news.description }<a class="more" href="behindFindById.do?id=18">【详细】</a></dd>
+        </dl>
+        <ul class="list-side3-cont">
+        <c:forEach var="nl" items="${newsList}">
+            <li><a href="behindFindById.do?id=${nl.id}">${nl.title }</a></li>
+        </c:forEach>
+            <!--  <li><a href="新闻资讯详情.shtml">热烈庆祝我司与2013年1月通过FDA认证</a></li>
+            <li><a href="新闻资讯详情.shtml">热烈庆祝我司与2013年1月通过FDA认证</a></li>
+            <li><a href="新闻资讯详情.shtml">热烈庆祝我司与2013年1月通过FDA认证</a></li>
+            <li><a href="新闻资讯详情.shtml">热烈庆祝我司与2013年1月通过FDA认证</a></li>
+            <li><a href="新闻资讯详情.shtml">热烈庆祝我司与2013年1月通过FDA认证</a></li>
+            <li><a href="新闻资讯详情.shtml">热烈庆祝我司与2013年1月通过FDA认证</a></li>-->
+        </ul>
+    </div>
+</div>
+</body>
+</html>

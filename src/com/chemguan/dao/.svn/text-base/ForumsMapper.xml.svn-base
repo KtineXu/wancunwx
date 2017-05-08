@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "http://mybatis.org/dtd/mybatis-3-mapper.dtd" "mybatis-3-mapper.dtd" >
+<mapper namespace = "com.chemguan.dao.ForumsDao">
+
+	<!-- 查询所有 -->
+	<select id = "findAllForums" resultType="com.chemguan.entity.Forums">
+		select * from Forums
+	</select>
+	
+	
+	<!-- 根据栏目id查询所有 -->
+	<select id = "findAllForumsbycolum" resultType="com.chemguan.entity.Forums">
+		select * from Forums where ColumnID=#{0}
+	</select>
+	
+	<!-- 根据ID修改-->
+	<select id = "updateForums" resultType = "com.chemguan.entity.Forums">
+		update Forums set addDate = #{addDate}, title = #{title}, userId=#{userId}, 
+		setTop=#{setTop} ,detail = #{detail}
+		 where id = #{id}
+	</select>
+	<!-- 新增信息 -->
+	<insert id = "addForums" parameterType="com.chemguan.entity.Forums">
+		insert into Forums (addDate,detail,setTop,title,userId) values (#{addDate},#{detail},#{setTop},#{title}
+		,#{userId})
+	</insert>
+	<!-- 根据ID删除商品信息 -->
+	<delete id = "deleteForumsById" parameterType="java.lang.Integer" >
+		delete from Forums where id = #{0}
+	</delete>
+	<!-- 批量删除信息 -->
+	<delete id = "deleteForums">
+		delete from Forums where id in
+		<foreach collection="list" open="(" close=")" separator="," item="aa">#{aa}</foreach>
+	</delete>
+	<!-- 根据ID查询信息 -->
+	<select id = "findForumsById" resultType = "com.chemguan.entity.Forums">
+		select * from Forums where id = #{0}
+	</select>
+		
+		
+</mapper>

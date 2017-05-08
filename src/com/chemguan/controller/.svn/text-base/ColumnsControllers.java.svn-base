@@ -1,0 +1,286 @@
+package com.chemguan.controller;
+
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+
+import com.chemguan.entity.Columns;
+import com.chemguan.entity.News;
+import com.chemguan.service.ColumnsService;
+import com.chemguan.service.NewsService;
+
+
+@Controller
+@Scope("prototype")
+public class ColumnsControllers {	
+	@Resource
+	private ColumnsService columnservice;
+	
+	@Resource
+	NewsService nService;
+	
+	
+	
+	//跳转添加栏目内容
+	@RequestMapping("GoAddColumn.do")
+	public String GoAddColumn(HttpServletRequest request){	
+		String columid=request.getParameter("columid");
+		if(columid!=null){
+			Columns colu = columnservice.findColumnsById(Integer.parseInt(columid));
+			request.setAttribute("colum", colu);
+			/*Columns colu1 = columnservice.findColumnsById(colu.getParentColumnId());
+			request.setAttribute("paname", colu1.getColumnName());*/
+		}		
+		//查询所有一级栏目     		
+		List<Columns> onelist= columnservice.findColumnsByParentId(0);		
+		for(int i=0;i<onelist.size();i++){
+			//二级栏目
+			List<Columns> twolist=null;
+			twolist=columnservice.findColumnsByParentId(onelist.get(i).getId());			
+			for(int j=0;j<twolist.size();j++){
+				//三级栏目
+				List<Columns> threelist=null;
+				threelist=columnservice.findColumnsByParentId(twolist.get(j).getId());
+				twolist.get(j).setList(threelist);
+			}
+			onelist.get(i).setList(twolist);
+		}		
+		request.setAttribute("list", onelist);
+		return "chemguanpanel/addContent.jsp";
+	}
+	
+	
+	
+	//添加栏目内容
+	@RequestMapping("AddColumn.do")
+	public String AddColumn(HttpServletRequest request,Columns column){	
+		columnservice.addColumns(column);		
+		return "SearchAllColum.do";
+	}
+	
+
+	
+	//修改栏目内容
+	@RequestMapping("updateColumn.do")
+	public String updateColumn(HttpServletRequest request,Columns column){	
+		Date d=new Date();
+		MultipartHttpServletRequest mreq = (MultipartHttpServletRequest)request;
+		
+		MultipartFile file = mreq.getFile("image");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+		String fileName = file.getOriginalFilename();
+		System.out.println(fileName);
+		if(!fileName.equals("")){
+		try {
+			String fileurl=request.getSession().getServletContext().getRealPath("upload")+"/"+sdf.format(d)+fileName.substring(fileName.lastIndexOf('.'));
+			FileOutputStream fos = new FileOutputStream(fileurl);				
+			column.setImgURL("upload"+"/"+sdf.format(d)+fileName.substring(fileName.lastIndexOf('.')));
+			System.out.println(fileurl);
+			fos.write(file.getBytes());
+			fos.flush();
+			fos.close();
+		}catch (IOException e) {  
+			System.out.println("失败");
+		}
+		}
+		String detail = request.getParameter("content");
+		column.setDetail(detail);
+		System.out.println(column.getColumnName()+"  "+column.getId()+"  "+column.getParentColumnId());		
+		columnservice.updateColumns(column);	
+		return "SearchAllColum.do";
+	}
+	
+	
+	//查询所有栏目
+	@RequestMapping("SearchAllColum.do")
+	public String SearchAllColum(HttpServletRequest request){	
+		//查询所有一级栏目     		
+		List<Columns> onelist= columnservice.findColumnsByParentId(0);	
+		if(onelist.size()!=0){
+		for(int i=0;i<onelist.size();i++){
+			//二级栏目
+			List<Columns> twolist=null;
+			twolist=columnservice.findColumnsByParentId(onelist.get(i).getId());
+			
+			//循环为二级栏目父栏目名称赋值
+			for(int s=0;s<twolist.size();s++){
+				twolist.get(s).setParentcolumname(columnservice.findColumnsById(twolist.get(s).getParentColumnId()).getColumnName());
+			}
+			
+			if(twolist.size()!=0){
+			for(int j=0;j<twolist.size();j++){
+				//三级栏目
+				List<Columns> threelist=null;
+				threelist=columnservice.findColumnsByParentId(twolist.get(j).getId());
+							
+					//循环为三级栏目父栏目名称赋值
+					for(int q=0;q<threelist.size();q++){
+						threelist.get(q).setParentcolumname(columnservice.findColumnsById(threelist.get(q).getParentColumnId()).getColumnName());
+					}
+				twolist.get(j).setList(threelist);	
+				}
+			}
+			onelist.get(i).setList(twolist);
+			}
+		}
+		request.setAttribute("list", onelist);		
+		return "chemguanpanel/columnList.jsp";
+	}
+	
+	
+	
+	
+	
+	//根据id删除栏目
+	@RequestMapping("SearchByParentid.do")
+	public String SearchByParentid(HttpServletRequest request,int id){	
+		columnservice.deleteColumnsById(id);			
+		return "SearchAllColum.do";
+	}
+	
+	
+	//前端页面
+	
+	/**
+	 * 向页面提供新闻信息集合
+	 * @return
+	 */
+	@ModelAttribute("newsList")
+	public List<News> getNewsList(){
+		List<News> newsList = new ArrayList<News>();
+		Map<String,Integer> map = new HashMap<String,Integer>();
+		map.put("start", 1);
+		newsList = nService.findByPageBean(map);
+		return newsList;
+	}
+	
+	/**
+	 * 向页面提供一个新闻对象
+	 */
+	@ModelAttribute("news")
+	public News getNews(){
+		News news = new News();
+		news = nService.findNewsById(18);
+		return news;
+	}
+	
+	/**
+	 *查询企业实力
+	 */
+	@RequestMapping("findColumnInfoById.do")
+	public String findColumnInfoById(HttpServletResponse response,HttpServletRequest request){
+		//int id = Integer.parseInt(request.getParameter("id"));
+		int id = Integer.parseInt(request.getParameter("id"));
+		List<Columns> cList = columnservice.findColumnsByParentId(id);
+		if(id == 51){
+			List<News> list =  nService.findManyByColumnId(id);
+			News news = list.get(0);
+			//List<Columns> cList = columnservice.findColumnsByParentId(id);
+			request.setAttribute("news", news);
+			
+		}
+		request.setAttribute("list", cList);
+		for(int i=0;i<cList.size();i++){  
+			int zid = cList.get(i).getId();   //循环遍历所有子栏目的id
+			List<News> zlist = nService.findManyByColumnId(zid);//根据父id查询栏目信息
+			request.setAttribute("zlist", zlist);
+			return "introduce.jsp";
+		}
+		
+		return "introduce.jsp";
+	}
+	
+	/**
+	 *查询人才招聘
+	 */
+	@RequestMapping("findHrInfoById.do")
+	public String findHrInfoById(HttpServletResponse response,HttpServletRequest request){
+		int id = 54;
+		List<News> list =  nService.findManyByColumnId(id);
+		request.setAttribute("list", list);
+		return "invite.jsp";
+	}
+	
+	/**
+	 *查询质量服务 
+	 */
+	@RequestMapping("findQualityInfoById.do")
+	public String findQualityInfoById(HttpServletResponse response,HttpServletRequest request){
+		int id = Integer.parseInt(request.getParameter("id"));
+		List<News> nList = nService.findManyByColumnId(id);
+		request.setAttribute("list", nList);
+		return "quality_services_list.jsp";
+	}
+	
+	
+	//英文版面
+	/**
+	 *QUALITY
+	 */
+	@RequestMapping("findEnQualityInfoById.do")
+	public String findEnQualityInfoById(HttpServletResponse response,HttpServletRequest request){
+		int id = Integer.parseInt(request.getParameter("id"));
+		List<News> nList = nService.findManyByColumnId(id);
+		request.setAttribute("list", nList);
+		return "EN/quality.jsp";
+	}
+	/**
+	 * NEWS
+	 */
+	/**
+	 * 前台查询的方法
+	 */
+	@RequestMapping("FindAllEnNews.do")
+	public String FindAllEnNews(HttpServletResponse response,HttpServletRequest request){
+		int id = Integer.parseInt(request.getParameter("id"));
+		List<News> nList = nService.findManyByColumnId(id);
+		request.setAttribute("list", nList);
+		return "EN/news.jsp";
+	}
+	
+	/**
+	 * 前台查询单个新闻的方法
+	 */
+	@RequestMapping("findEnNewsDeatilById.do")
+	public String findEnNewsDeatilById(HttpServletResponse response,HttpServletRequest request,Integer columnId){
+		Integer id = Integer.parseInt(request.getParameter("id"));
+		News news = new News();
+		news = nService.findNewsById(id);
+		//request.setAttribute("columnId",columnId);
+		request.setAttribute("news", news);
+		return "EN/newsDetail.jsp";
+	}
+	
+	/**
+	 *ABOUT US 
+	 */
+	
+	/**
+	 *RECRIUITMENT
+	 */
+	
+	/**
+	 *CONTACT US 
+	 */
+	
+	
+	
+	
+	
+}

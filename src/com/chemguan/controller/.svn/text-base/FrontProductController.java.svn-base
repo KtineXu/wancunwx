@@ -1,0 +1,181 @@
+package com.chemguan.controller;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.chemguan.entity.News;
+import com.chemguan.po.PageBean;
+import com.chemguan.po.Product;
+import com.chemguan.po.Producttype;
+import com.chemguan.service.NewsService;
+import com.chemguan.service.ProductService;
+import com.chemguan.service.ProductTypeService;
+import com.chemguan.tool.Tools;
+
+/**
+ * 产品中心前台页面的控制类
+ * @author 郭胜
+ *
+ */
+@Controller
+public class FrontProductController {
+	
+	@Resource
+	private ProductTypeService productTypeServiceImpl;
+	
+	@Resource
+	private ProductService productServiceImpl;
+	
+	@Resource
+	private NewsService newsServiceImpl;
+	
+	@Resource
+	private Tools tools;
+	
+
+	//产品中心的首页：提供产品分类列表；新闻资讯列表；所有产品列表
+	
+	/**
+	 * 向页面提供产品分类集合信息
+	 */
+	@ModelAttribute("producttypeList")
+	public List<Producttype> getProducttypeList(){
+		List<Producttype> producttypeList = new ArrayList<Producttype>();
+		producttypeList = productTypeServiceImpl.findAllProductType();
+		return producttypeList;
+	}
+	
+	/**
+	 * 向页面提供新闻信息集合
+	 * @return
+	 */
+	@ModelAttribute("newsList")
+	public List<News> getNewsList(){
+		List<News> newsList = new ArrayList<News>();
+		Map<String,Integer> map = new HashMap<String,Integer>();
+		map.put("start", 1);
+		newsList = newsServiceImpl.findByPageBean(map);
+		return newsList;
+	}
+	
+	/**
+	 * 向页面提供一个新闻对象
+	 */
+	@ModelAttribute("news")
+	public News getNews(){
+		News news = new News();
+		news = newsServiceImpl.findNewsById(18);
+		return news;
+	}
+	
+	/**
+	 * 前台功能：向前台提供分页信息
+	 */
+	@ModelAttribute("pageMap")
+	public PageBean getPageMap(HttpServletRequest request){
+		Integer typeid =null;
+		if(request.getParameter("typeid") != null && !request.getParameter("typeid").equals("")){
+			typeid = Integer.parseInt(request.getParameter("typeid"));
+		}
+		List<Product> page = new ArrayList<Product>();
+		Map<String,Integer> map = new HashMap<String,Integer>();
+		map.put("start", null);
+		map.put("typeid", typeid);
+		page = productServiceImpl.findProductByPageBean(map);
+		int record = page.size();
+		int endPage = record%4==0?record/4:record/4+1;
+		PageBean pageMap = new PageBean();
+		pageMap.setBeginPageIndex(1);
+		pageMap.setEndPageIndex(endPage);
+		String crp = request.getParameter("currentPage");
+		int currentPage = 1;
+		if(crp != null && !crp.equals("")){
+			currentPage = Integer.parseInt(crp);
+		}
+		request.setAttribute("currentPage", currentPage);
+		return pageMap;
+	}
+	
+	/**
+	 * 前台功能：产品中心
+	 */
+	@RequestMapping("FontProductCenter.do")
+	public String FontProductCenter(HttpServletRequest request){
+		//这里要提供的是所有的产品
+		List<Product> productList = new ArrayList<Product>();
+		Map<String,Integer> map = new HashMap<String,Integer>();
+		map.put("start", 0);
+		productList = productServiceImpl.findByPageBean(map);
+		request.setAttribute("productList", productList);
+		return "products_list.jsp";
+	}
+	
+	/**
+	 * 前台功能：根据产品类型查找产品
+	 */
+	@RequestMapping("FontFindProductByType.do")
+	public String FontFindProductByType(HttpServletRequest request){
+		List<Product> productList = new ArrayList<Product>();
+		int typeid = Integer.parseInt(request.getParameter("typeid"));
+		productList = productServiceImpl.findProductByTypeId(typeid);
+		request.setAttribute("typeid", typeid);
+		request.setAttribute("productList", productList);
+		return "products_list.jsp";
+	}
+	
+	/**
+	 * 前台功能：查询产品详情
+	 */
+	@RequestMapping("FontFindProductDetail.do")
+	public String FontFindProductDetail(HttpServletRequest request){
+		int id = Integer.parseInt(request.getParameter("id"));
+		Product p = new Product();
+		p = productServiceImpl.findProductById(id);
+		List<String> image = new ArrayList<String>();
+		image = tools.split(p.getImageurl());
+		request.setAttribute("imageList", image);
+		request.setAttribute("product", p);
+		return "products_detail.jsp";
+	}
+	
+	/**
+	 * 前台功能：分页功能
+	 */
+	@RequestMapping("fontFindProductByPageBean.do")
+	public String fontFindProductByPageBean(HttpServletRequest request,HttpServletResponse response){
+		//分页查询：需要产品的类别信息，需要当前的页码
+		String rtp = request.getParameter("typeid");
+		Integer typeid = null;
+		if(rtp != null && !rtp.equals("")){
+			typeid = Integer.parseInt(rtp);
+		}
+		String cpe = request.getParameter("currentPage");
+		int currentPage = 1;
+		if(cpe != null && !cpe.equals("")){
+			currentPage = Integer.parseInt(request.getParameter("currentPage"));
+		}
+		int pageSize = 4;
+		int start = (currentPage - 1)* pageSize;
+		List<Product> productList = new ArrayList<Product>();
+		Map<String,Integer> map = new HashMap<String,Integer>();
+		map.put("start",start );
+		map.put("typeid", typeid);
+		productList = productServiceImpl.findProductByPageBean(map);
+		request.setAttribute("productList", productList);
+		request.setAttribute("typeid", typeid);
+		request.setAttribute("currentPage", currentPage);
+		return "products_list.jsp";
+	}
+	
+	
+}

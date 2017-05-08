@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "http://mybatis.org/dtd/mybatis-3-mapper.dtd" "mybatis-3-mapper.dtd" >
+<mapper namespace = "com.chemguan.dao.NewsDao">
+
+	<!-- 查询所有 -->
+	<select id = "findAllNews" resultType="com.chemguan.entity.News">
+		select * from News
+	</select>
+	<!-- 根据columnId查询新闻信息 -->
+	<select id="findManyByColumnId" parameterType="java.lang.Integer" resultType="com.chemguan.entity.News">
+		select * from News
+		where 
+		columnId = #{columnId}
+	</select>
+	<!-- 根据ID修改-->
+	<select id = "updateNews" resultType = "com.chemguan.entity.News">
+		update News set 
+			addDate = #{addDate},
+			columnId = #{columnId},
+			description = #{description},
+			detail = #{detail},
+			imgURL = #{imgURL},
+			title = #{title},
+			clickCount = #{clickCount}
+		where id = #{id}
+	</select>
+	<!-- 新增信息 -->
+	<insert id = "addNews" parameterType="com.chemguan.entity.News">
+		insert into News
+		 (addDate,columnId,description,detail,imgURL,title,clickCount) 
+		 values 
+		 (#{addDate},#{columnId},#{description},#{detail}
+		,#{imgURL},#{title},#{clickCount})
+	</insert>
+	<!-- 根据ID删除商品信息 -->
+	<delete id = "deleteNewsById" parameterType="java.lang.Integer" >
+		delete from News where id = #{0}
+	</delete>
+	<!-- 批量删除信息 -->
+	<delete id = "deleteNews">
+		delete from News where id in
+		<foreach collection="list" open="(" close=")" separator="," item="aa">#{aa}</foreach>
+	</delete>
+	<!-- 根据ID查询信息 -->
+	<select id = "findNewsById" resultType = "com.chemguan.entity.News">
+		select * from News where id = #{0}
+	</select>
+	
+	<!-- 分页查询 -->
+	<select id="findByPageBean" resultType="com.chemguan.entity.News" parameterType = "java.util.Map">
+		select * from News 
+		<if test="start != null">
+			limit #{start},4
+		</if>
+	</select>
+	
+	<!-- 满足首页的一个方法 -->
+	<select id="findByIndexPage" resultType="com.chemguan.entity.News" parameterType = "java.util.Map">
+		select * from News 
+		<if test="start != null">
+			limit #{start},8
+		</if>
+	</select>
+	
+	
+	
+</mapper>

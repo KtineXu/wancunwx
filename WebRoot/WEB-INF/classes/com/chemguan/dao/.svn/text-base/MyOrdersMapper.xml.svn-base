@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "http://mybatis.org/dtd/mybatis-3-mapper.dtd" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.chemguan.dao.MyOrdersDao">
+	<select id="findAllOrders" resultType="com.chemguan.entity.MyOrders" parameterType="java.lang.Integer"> 
+		select p.productName,p.quantity,p.ProductImgURL,o.addDate from orderProducts p join Orders o on p.OrderID=o.ID join users u on u.id=o.UserID  where u.id=#{id}
+	</select>
+	
+	<select id="findAllid" resultType="java.util.Map" parameterType="java.lang.Integer">
+			select * from Products where 	id=#{id}
+  	</select>
+  	
+	
+</mapper>

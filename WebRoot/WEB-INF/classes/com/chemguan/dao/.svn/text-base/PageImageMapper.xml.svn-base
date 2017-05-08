@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "http://mybatis.org/dtd/mybatis-3-mapper.dtd" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.chemguan.dao.PageImageDao">
+	
+	<!-- 查询首页轮播图 -->
+	<select id="findFirstPageImage" resultType="com.chemguan.po.PageImage" >
+		select * from pageimage where id = 1
+	</select>
+	
+	<!-- 修改首页轮播图 -->
+	<update id="updateFirstPageImage" parameterType="com.chemguan.po.PageImage">
+		update pageimage set image = #{image} where id = 1
+	</update>
+</mapper>

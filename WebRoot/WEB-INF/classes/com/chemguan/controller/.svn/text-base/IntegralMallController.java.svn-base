@@ -1,0 +1,220 @@
+package com.chemguan.controller;
+
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.chemguan.entity.IntegralMall;
+import com.chemguan.entity.OrderProducts;
+import com.chemguan.entity.Orders;
+import com.chemguan.entity.Products;
+import com.chemguan.entity.Users;
+import com.chemguan.service.OrderConfirmService;
+import com.chemguan.service.OrderProductsService;
+import com.chemguan.service.OrdersService;
+import com.chemguan.service.UsersService;
+import com.chemguan.service.impl.IntegralMallServiceImpl;
+@Controller
+public class IntegralMallController {
+	@Resource
+	private IntegralMallServiceImpl integralmallservice;
+	@Resource
+	private UsersService uService;
+	@Resource
+	private OrdersService oService;
+	@Resource
+	private OrderProductsService oPservice;
+	@Resource
+	private OrderConfirmService orderconfirmsrvice;
+	@Resource
+	private UsersService userService;
+	
+	
+	
+	
+	/**
+	 * 查询绘图笔配件
+	 */
+	
+	@RequestMapping("findAllProducts.do")
+	public String findAllProducts(HttpServletRequest request){
+		
+		List<IntegralMall> intList = integralmallservice.findAllProducts(null);
+		int total = intList.size();
+		int pageCount = total%4==0?total/4:total/4+1;
+		request.setAttribute("pageCount", pageCount);
+		Map map = new HashMap();
+		int start = 0;
+		if(request.getParameter("start") == null || request.getParameter("start").equals("")){
+			start = 0;
+		}else{
+			start = Integer.parseInt(request.getParameter("start"));
+		}
+		map.put("start", start);
+		map.put("pageSize", 4);
+		List<IntegralMall> integralmall=integralmallservice.findAllProducts(map);
+			request.setAttribute("integralmall", integralmall);
+			return "productList.jsp";
+	}
+	
+	/**
+	 * 查询其他产品
+	 */
+	@RequestMapping("findAllqita.do")
+	@ResponseBody
+	public List<IntegralMall> findAllqita(HttpServletRequest request)
+	{
+		List<IntegralMall> intList = integralmallservice.findAllqita(null);
+		int total = intList.size();
+		int pageCount = total%4==0?total/4:total/4+1;
+		request.setAttribute("pageCount", pageCount);
+		Map map = new HashMap();
+		int start = 0;
+		if(request.getParameter("start") == null || request.getParameter("start").equals("")){
+			start = 0;
+		}else{
+			start = Integer.parseInt(request.getParameter("start"));
+		}
+		map.put("start", start);
+		map.put("pageSize", 4);
+		List<IntegralMall> integralmal=integralmallservice.findAllqita(map);
+		request.setAttribute("integralmal", integralmal);
+		return integralmal;
+		
+	} 
+	
+	/**
+	 * 喜欢的商品
+	 */
+	@RequestMapping("findAllLike.do")
+	public String findAllLike(HttpServletRequest request)
+	{
+		List<IntegralMall> integralma=integralmallservice.findLike();
+		request.setAttribute("integralma", integralma);
+		return "productList.jsp";
+		
+	} 
+	/**
+	 * 积分商品访问量
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("findvisit.do")
+	public String visitCount(HttpServletRequest request)
+	{
+		int visitCount ;
+		String idd=request.getParameter("id");
+		int id=Integer.parseInt(idd);
+		Map map = new HashMap();
+		map.put("id",id);
+		Products p = integralmallservice.findAllid(id);//根据id查询产品详情
+		
+		if(p.getVisitCount()==null)
+		{
+			visitCount = 0;
+		}else{
+			visitCount = p.getVisitCount()+1;
+		}
+		map.put("visitCount", visitCount);
+		integralmallservice.visitCount(map);//访问量+1
+		List<IntegralMall> integralmall=integralmallservice.findAllProducts(map);//查询所有产品
+		request.setAttribute("integralmall", integralmall);
+		List<IntegralMall> integralmal=integralmallservice.findAllqita(map);//查询其他产品
+		request.setAttribute("integralmal", integralmal);
+		return "orderConfirm.jsp";
+	}
+	
+	/**
+	 * 产品详情
+	 * @throws Exception 
+	 */
+	@RequestMapping("findAllid.do")
+	public String findAllid(HttpServletRequest request,	HttpServletResponse response) throws Exception
+	{
+
+			visitCount(request);
+			String idd=request.getParameter("id");
+			int id=Integer.parseInt(idd);
+			Products integral=integralmallservice.findAllid(id);
+			
+			request.setAttribute("integral", integral);
+			return "productDetail.jsp";
+		
+	}
+	
+	@RequestMapping("findAllids.do")
+	public String findAllids(HttpServletRequest request)  throws Exception
+	{		
+			visitCount(request);
+			return "orderConfirm.jsp";
+		
+	}
+	
+	/**
+	 * 根据用户id去查询地址
+	 */
+	@RequestMapping("findAddress.do")
+	@ResponseBody
+	public String findAddress(HttpServletRequest request,HttpServletResponse response, Integer id) throws UnsupportedEncodingException
+	{
+		HttpSession session = request.getSession();
+		String openID = (String) session.getAttribute("openID");
+		Users use = uService.findUsersByoppId(openID);
+		
+		
+		/*String idd=request.getParameter("id");
+		id=Integer.parseInt(idd);*/
+		String address=integralmallservice.findAddress(use.getId());
+		PrintWriter out;
+		try {
+			out = response.getWriter();
+			out.print(address);
+			out.close();
+			out.flush();
+		} catch (IOException e1) {
+			
+			e1.printStackTrace();
+		}
+		
+	
+		return address;
+			
+	}
+	
+	/**
+	 * 调用总方法
+	 * @throws IOException 
+	 */
+	@RequestMapping("findAll.do")
+	public String findAll(HttpServletRequest request,HttpServletResponse response) throws Exception
+	{
+		HttpSession session = request.getSession();
+		String openID = (String) session.getAttribute("openID");
+		Users use = uService.findUsersByoppId(openID);
+		if(use==null){
+			response.sendRedirect("https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx38b32f527759debd&redirect_uri=http%3A%2F%2Fxiguashu.jiriweb.com%2FgetUser.do?reurl=findAll.do&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect");
+		}
+		findAllProducts(request);
+		findAllqita(request);
+		findAllLike(request);
+		return "productList.jsp";
+	} 
+	
+}

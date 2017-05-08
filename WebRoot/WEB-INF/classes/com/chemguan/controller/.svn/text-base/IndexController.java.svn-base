@@ -1,0 +1,125 @@
+package com.chemguan.controller;
+
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.chemguan.entity.News;
+import com.chemguan.po.PageImage;
+import com.chemguan.po.Producttype;
+import com.chemguan.service.NewsService;
+import com.chemguan.service.PageImageService;
+import com.chemguan.service.ProductTypeService;
+import com.chemguan.tool.Tools;
+
+
+@Controller
+@Scope("prototype")
+public class IndexController {
+	@Resource
+	private PageImageService pageImageService;
+	@Resource
+	private Tools tools;
+	@Resource
+	private ProductTypeService productTypeServiceImpl;
+	@Resource
+	private NewsService nService;
+	
+	/**
+	 * 首页
+	 * @param response
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("index.do")
+	public String index(HttpServletResponse response,HttpServletRequest request)throws Exception{
+		//为首页准备轮播图片
+		PageImage pi = new PageImage();
+		pi = pageImageService.findFirstPageImage();
+		List<String> firstPageImage = new ArrayList<String>();
+		if(pi.getImage() != null){
+			firstPageImage = tools.split(pi.getImage());
+		}
+		request.setAttribute("firstPageImage", firstPageImage);
+		
+		//为首页准备产品类型
+		List<Producttype> productTypeList = new ArrayList<Producttype>();
+		Map<String,Integer> map = new HashMap<String,Integer>();
+		map.put("start", 0);
+		productTypeList = productTypeServiceImpl.findProductTypeByPageBean(map);
+		request.setAttribute("productTypeList", productTypeList);
+		
+		//为首页准备质量中心图片
+		List<News> qualityList = nService.findManyByColumnId(46);
+		request.setAttribute("qualityList", qualityList);
+		
+		//为首页准备新闻4个新闻对象
+		Map<String,Integer> newsMap = new HashMap<String,Integer>();
+		newsMap.put("start", 0);
+		//newsMap.put("pageSize", 4);
+		List<News> newsList = nService.findByPageBean(newsMap);
+		request.setAttribute("newsList", newsList);
+		
+		//为首页准备八个新闻对象
+		Map<String,Integer> newsMap2 = new HashMap<String,Integer>();
+		newsMap2.put("start", 0);
+//		newsMap2.put("pageSize", 8);
+		List<News> newsList2 = nService.findByIndexPage(newsMap2);
+		request.setAttribute("newsList2", newsList2);
+		return "index.jsp";
+			
+	}
+	
+	/**
+	 * 英文首页
+	 */
+	@RequestMapping("englishIndex.do")
+	public String englishIndex(HttpServletResponse response,HttpServletRequest request)throws Exception{
+		//为首页准备轮播图片
+		PageImage pi = new PageImage();
+		pi = pageImageService.findFirstPageImage();
+		List<String> firstPageImage = new ArrayList<String>();
+		if(pi.getImage() != null){
+			firstPageImage = tools.split(pi.getImage());
+		}
+		request.setAttribute("firstPageImage", firstPageImage);
+		
+		//为首页准备产品类型
+		List<Producttype> productTypeList = new ArrayList<Producttype>();
+		Map<String,Integer> map = new HashMap<String,Integer>();
+		map.put("start", 0);
+		productTypeList = productTypeServiceImpl.findProductTypeByPageBean(map);
+		request.setAttribute("productTypeList", productTypeList);
+		
+		//为首页准备质量中心图片
+		List<News> qualityList = nService.findManyByColumnId(46);
+		request.setAttribute("qualityList", qualityList);
+		
+		//为首页准备新闻4个新闻对象
+		Map<String,Integer> newsMap = new HashMap<String,Integer>();
+		newsMap.put("start", 0);
+		//newsMap.put("pageSize", 4);
+		List<News> newsList = nService.findByPageBean(newsMap);
+		request.setAttribute("newsList", newsList);
+		
+		//为首页准备八个新闻对象
+		Map<String,Integer> newsMap2 = new HashMap<String,Integer>();
+		newsMap2.put("start", 0);
+//		newsMap2.put("pageSize", 8);
+		List<News> newsList2 = nService.findByIndexPage(newsMap2);
+		request.setAttribute("newsList2", newsList2);
+		return "EN/index.jsp";
+			
+	}
+	
+}

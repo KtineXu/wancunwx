@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "http://mybatis.org/dtd/mybatis-3-mapper.dtd" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.chemguan.dao.UsersDao">
+
+	<!-- 查询所有信息 -->
+	<select id = "findAllUsers" resultType = "com.chemguan.entity.Users">
+		select * from users where 1=1 order by id desc		
+	</select>
+	
+	<!-- 新增信息 -->
+	<insert id = "addUsers" parameterType="com.chemguan.entity.Users">
+		insert into users (mobile,score,address,addDate,headImgURL,nickName,province,city,realName,oppid,shareUserID) values
+		(#{mobile},#{score},#{address},#{addDate},#{headImgURL},#{nickName},#{province},#{city},#{realName},#{oppid},#{shareUserID})
+	</insert>
+	
+	<!-- 根据ID查询信息 -->
+	<select id = "findUsersById" resultType = "com.chemguan.entity.Users">
+		select * from users where id = #{0}
+	</select>
+	
+	<!-- 根据ID修改信息 -->
+	<update id ="updateUsersById">
+		update users set mobile = #{mobile},score = #{score},address = #{address},addDate = #{addDate},headImgURL = #{headImgURL}
+		,nickName = #{nickName},province = #{province},city = #{city},realName = #{realName},oppid=#{oppid},shareUserID = #{shareUserID} where id = #{id}
+		
+	</update>
+	
+	<!-- 根据ID删除信息 -->
+	<delete id = "deleteUsersById" parameterType="java.lang.Integer">
+		delete from users where id = #{0}
+	</delete>
+	
+	<!-- 批量删除信息 -->
+	<delete id = "deleteUsers">
+		delete from users where id in
+		<foreach collection="list" open="(" close=")" separator="," item="aa">#{aa}</foreach>
+	</delete>
+	
+	<!-- 根据oppID查询信息 -->
+	<select id = "findUsersByoppId" resultType = "com.chemguan.entity.Users">
+		select * from users where oppid = #{0}
+	</select>
+	
+	<!-- 后台分页功能 -->
+	<select id = "findByPageBean" parameterType="java.util.Map" resultType="com.chemguan.entity.Users">
+		select * from users 
+		<if test="start != null">
+			limit #{start},4
+		</if>
+	</select>
+</mapper>

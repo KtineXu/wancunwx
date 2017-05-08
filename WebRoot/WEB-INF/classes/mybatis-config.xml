@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd" >
+<configuration>
+	<mappers>
+		<mapper resource="com/chemguan/dao/WorksCommentMapper.xml"/>
+		<mapper resource="com/chemguan/dao/WorksMapper.xml"/>
+		<mapper resource ="com/chemguan/dao/NewsMapper.xml"/>
+		<mapper resource="com/chemguan/dao/ItemNumbersMapper.xml"/>
+		<mapper resource="com/chemguan/dao/ForumsMapper.xml"/>
+		<mapper resource="com/chemguan/dao/ForumReplyMapper.xml"/>
+		<mapper resource="com/chemguan/dao/ColumnsMapper.xml"/>
+		<mapper resource="com/chemguan/dao/ScoreRecordsMapper.xml"/>
+		<mapper resource="com/chemguan/dao/RepairRecordsMapper.xml"/>
+		<mapper resource="com/chemguan/dao/OrdersMapper.xml"/>
+		<mapper resource="com/chemguan/dao/OrderProductsMapper.xml"/>
+		<mapper resource="com/chemguan/dao/RepairProgressMapper.xml"/>
+
+		<mapper resource="com/chemguan/dao/UsersMapper.xml"/>
+		<mapper resource="com/chemguan/dao/MyOrdersMapper.xml"/>
+		<mapper resource="com/chemguan/dao/UsersMapper.xml"/>
+		<mapper resource="com/chemguan/dao/IntegralMallMapper.xml"/>
+		<mapper resource="com/chemguan/dao/OrderConfirmMapper.xml"/>
+		<mapper resource="com/chemguan/dao/ManagerMapper.xml"/>
+		
+		<mapper resource="com/chemguan/dao/ProducttypeMapper.xml"/>
+		<mapper resource ="com/chemguan/dao/ProductMapper.xml"/>
+		<mapper resource="com/chemguan/dao/PageImageMapper.xml"/>
+	</mappers>
+</configuration>

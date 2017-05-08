@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "http://mybatis.org/dtd/mybatis-3-mapper.dtd" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.chemguan.dao.OrderProductsDao">
+
+	<!-- 查询所有信息 -->
+	<select id = "findAllOrderProducts" resultType = "com.chemguan.entity.OrderProducts">
+		select * from orderProducts where 1=1 order by id desc
+		
+	</select>
+	
+	<!-- 新增信息 -->
+	<insert id = "addOrderProducts" parameterType="com.chemguan.entity.OrderProducts">
+		insert into orderProducts (productName,productID,orderID,quantity,productScore,productImgURL) values
+		(#{productName},#{productID},#{orderID},#{quantity},#{productScore},#{productImgURL})
+	</insert>
+	
+	<!-- 根据ID查询信息 -->
+	<select id = "findOrderProductsById" resultType = "com.chemguan.entity.OrderProducts">
+		select * from orderProducts where orderid = #{0}
+	</select>
+	
+	<!-- 根据ID修改信息 -->
+	<update id ="updateOrderProductsById">
+		update orderProducts set productName = #{productName},productID = #{productID},orderID = #{orderID},quantity = #{quantity}
+		,productScore = #{productScore},productImgURL = #{productImgURL},ServiceDate=#{ServiceDate},SerialNumber=#{SerialNumber},ServiceFlag=#{ServiceFlag} where id = #{id}		
+	</update>
+	
+	<!-- 根据ID删除信息 -->
+	<delete id = "deleteOrderProductsById" parameterType="java.lang.Integer">
+		delete from orderProducts where id = #{0}
+	</delete>
+	
+	<!-- 批量删除信息 -->
+	<delete id = "deleteOrderProducts">
+		delete from orderProducts where id in
+		<foreach collection="list" open="(" close=")" separator="," item="aa">#{aa}</foreach>
+	</delete>
+	
+	<!-- 根据用户id查询所有已延保过的商品 -->
+	<select id = "findybOrderProductsbycusid" resultType = "com.chemguan.entity.Orderserviceproduct">
+		SELECT 
+		p.id,
+		o.id,
+		op.id,
+		p.productName,
+		p.imgURL,
+		p.manufactureDate,
+		p.registrationDate,
+		p.serviceDate
+		FROM 
+		orderproducts op 
+		LEFT JOIN orders o ON 
+		op.orderID=o.id 
+		LEFT JOIN products p 
+		ON op.productID=p.id 
+		WHERE o.userID=#{0} 
+		AND p.serviceFlag=1
+	</select>
+	
+	
+	
+	
+	
+</mapper>

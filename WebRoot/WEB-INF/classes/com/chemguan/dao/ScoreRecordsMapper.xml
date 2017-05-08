@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "http://mybatis.org/dtd/mybatis-3-mapper.dtd" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.chemguan.dao.ScoreRecordsDao">
+
+	<!-- 查询所有信息 -->
+	<select id = "findAllScoreRecords" resultType = "com.chemguan.entity.ScoreRecords">
+		select * from scoreRecords where 1=1 order by id desc
+		
+	</select>
+	
+	<!-- 新增信息 -->
+	<insert id = "addScoreRecords" parameterType="com.chemguan.entity.ScoreRecords">
+		insert into scoreRecords (imgURL,title,score,addDate,userID,remark) values
+		(#{imgURL},#{title},#{score},#{addDate},#{userID},#{remark})
+	</insert>
+	
+	<!-- 根据ID查询信息 -->
+	<select id = "findScoreRecordsById" resultType = "com.chemguan.entity.ScoreRecords">
+		select * from scoreRecords where id = #{0}
+	</select>
+	
+	<!-- 根据ID修改信息 -->
+	<update id ="updateScoreRecordsById">
+		update scoreRecords set imgURL = #{imgURL},title = #{title},score = #{score},addDate = #{addDate},userID = #{userID}
+		,remark = #{remark} where id = #{id}
+		
+	</update>
+	
+	<!-- 根据ID删除信息 -->
+	<delete id = "deleteScoreRecordsById" parameterType="java.lang.Integer">
+		delete from scoreRecords where id = #{0}
+	</delete>
+	
+	<!-- 批量删除信息 -->
+	<delete id = "deleteScoreRecords">
+		delete from scoreRecords where id in
+		<foreach collection="list" open="(" close=")" separator="," item="aa">#{aa}</foreach>
+	</delete>
+		
+	
+	<!-- 根据title查询信息 -->
+	<select id = "findScoreRecordsBytitle" resultType = "com.chemguan.entity.ScoreRecords">
+		select * from scoreRecords where title = #{0} and userID=#{1} order by addDate desc
+	</select>
+	
+	<!-- 根据userid查询scoreRecords -->
+	<select id="findByUserId" parameterType="java.lang.Integer" resultType="com.chemguan.entity.ScoreRecords">
+		select * from scoreRecords where userid = #{userId} order by id desc
+	</select>
+</mapper>

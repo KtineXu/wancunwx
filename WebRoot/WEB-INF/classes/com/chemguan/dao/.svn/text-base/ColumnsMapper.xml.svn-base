@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "http://mybatis.org/dtd/mybatis-3-mapper.dtd" "mybatis-3-mapper.dtd" >
+<mapper namespace = "com.chemguan.dao.ColumnsDao">
+
+	<!-- 查询所有 -->
+	<select id = "findAllColumns" resultType="com.chemguan.entity.Columns">
+		select * from Columns 
+	</select>
+	<!-- 根据ID修改-->
+	<select id = "updateColumns" resultType = "com.chemguan.entity.Columns">
+		update columns set 
+			columnName = #{columnName},
+			description = #{description},
+			detail = #{detail},
+			imgURL = #{imgURL},
+			parentColumnId = #{parentColumnId} 
+		 where id = #{id}
+	</select>
+	<!-- 新增信息 -->
+	<insert id = "addColumns" parameterType="com.chemguan.entity.Columns">
+		insert into Columns (columnName,description,detail,imgURL,parentColumnId) values (#{columnName},#{description},#{detail},#{imgURL}
+		,#{parentColumnId})
+	</insert>
+	<!-- 根据ID删除商品信息 -->
+	<delete id = "deleteColumnsById" parameterType="java.lang.Integer" >
+		delete from Columns where id = #{0}
+	</delete>
+	<!-- 批量删除信息 -->
+	<delete id = "deleteColumns">
+		delete from Columns where id in
+		<foreach collection="list" open="(" close=")" separator="," item="aa">#{aa}</foreach>
+	</delete>
+	<!-- 根据ID查询信息 -->
+	<select id = "findColumnsById" resultType = "com.chemguan.entity.Columns">
+		select * from Columns where id = #{id}
+	</select>
+		
+		
+		<!-- 根据父ID查询信息 -->
+	<select id = "findColumnsByParentId" resultType = "com.chemguan.entity.Columns">
+		select * from Columns where parentColumnID = #{id}
+	</select>
+</mapper>

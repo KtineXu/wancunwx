@@ -1,0 +1,355 @@
+.container{
+    width:93.75%;
+    margin:auto;
+}
+li{
+    list-style: none;
+}
+.comp_intro{
+    width:100%;
+    background:url("../images/about_bg.jpg") no-repeat center top;
+    background-size:cover;
+    padding:31% 0 10%;
+    margin-bottom:22%;
+}
+.comp_intro .info_box{
+margin-bottom:10%;
+
+}
+.comp_intro .info_box h3{
+    color:#fff;
+    padding:3% 0;
+    width:100%;
+    background:url("../images/comp_intro_03.png") repeat center;
+    border-top-left-radius: 2rem;
+    border-top-right-radius: 2rem;
+    text-align:center;
+    font-size:1.3rem;
+    font-weight: normal;
+}
+.comp_intro .info_box .cont{
+    padding:8% 5% 5%;
+    width:90%;
+    text-align:center;
+    background:#fff url("../images/comp_intro_07.png") repeat center;
+}
+.comp_intro .info_box .cont p{
+    text-indent: 2em;
+    font-size: 1.1rem;
+    color:#666;
+    line-height:1.8;
+    text-align:left;
+}
+.comp_intro .info_box .cont img{
+    margin:5% auto;
+}
+.comp_intro .contact{
+    background: url("../images/comp_intro_07.png") repeat center;
+    padding:10% 0;
+}
+.comp_intro .contact>i{
+    display: block;
+    width:21.33%;
+    margin:0 auto 10%;
+}
+.comp_intro .contact ul{
+    width:88.67%;
+    margin:auto;
+}
+.comp_intro .contact ul li{
+    border-bottom:1px solid #BAB9B8;
+    padding:4% 1%;
+    width:98%;
+    overflow: hidden;
+}
+.comp_intro .contact ul li>i{
+    float:left;
+    width:19.2%;
+    margin-right:7%;
+
+}
+.comp_intro .contact ul li p{
+    width:73.21%;
+    font-style: italic;
+    color:#4F4D4D;
+    float:left;
+}
+.comp_intro .contact ul li:nth-child(1) p{
+    font-size:1.8rem;
+    margin-top:2%;
+}
+.comp_intro .contact ul li:nth-child(1) p>i{
+    font-size:1.2rem;
+    color:#666;
+}
+.comp_intro .contact ul li:nth-child(2) p{
+    font-size:1.4rem;
+    margin-top:5%;
+}
+.comp_intro .contact ul li:nth-child(3) p{
+    font-size:1.4rem;
+    line-height:1.5;
+    margin-top:2%;
+}
+
+/*ɹ������*/
+.shaidan{
+    width: 100%;
+    position: relative;
+    background:url("../images/shaidan_02.png") no-repeat center;
+    background-size:cover;
+    padding-top:40%;
+    padding-bottom:30%;
+}
+.shaidan .gai{
+    width: 100%;
+    position: absolute;
+    top:0;
+    left:0;
+    z-index: 100;
+}
+.shaidan .photo{
+    overflow: hidden;
+}
+.shaidan .photo .cont{
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+    border:2px solid #FDA427;
+    overflow: hidden;
+    background:url("../images/shaidan6.png") repeat center;
+    position: relative;
+    text-align:center;
+}
+.shaidan .photo .big{
+    float:left;
+    width:78.67%;
+    margin-bottom:3%;
+}
+.shaidan .photo .small{
+    width:51%;
+    float:right;
+    margin-right:6%;
+}
+ .clickphoto{
+    width:70%;
+    height:8rem;
+    color:#fff;
+    font-size:1.2rem;
+    text-align:center;
+    position: absolute;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    margin:auto;
+}
+ .clickphoto i{
+    display: block;
+    width:27.28%;
+    margin:0 auto 8%;
+}
+ .clickphoto span{
+    line-height:1.4;
+}
+.shaidan .photo .small .clickphoto{
+    height:6rem;
+}
+.shaidan .photo .cont input{
+    width:75%;
+    height:11rem;
+    position: absolute;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    margin:auto;
+    opacity: 0;
+    z-index:1;
+}
+.shaidan .photo .cont .loading{
+    display: none;
+}
+.shaidan .photo .cont.on .loading{
+    background:url("../images/shaidan8.png") repeat center;
+    width:100%;
+    height:100%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+    position: absolute;
+    left:0;
+    top:0;
+    z-index:5;
+    text-align:center;
+    vertical-align: middle;
+    display: block;
+}
+.shaidan .photo .cont.on .loading img{
+    position: absolute;
+    left:0;
+    top:0;
+    right:0;
+    bottom:0;
+    margin:auto;
+}
+
+
+.shaidan .photo .cont figure{
+    margin:0;
+    padding:0;
+    z-index:90;
+}
+.shaidan .photo .cont figure div{
+    display: inline-block;
+    width:100%;
+    border-radius:100%;
+    overflow: hidden;
+    /*-webkit-box-shadow: 0 0 3px #ccc;*/
+    /*box-shadow: 0 0 3px #ccc;*/
+}
+.shaidan .photo .cont figure img{
+    width: 100%;
+    min-height: 100%;
+    text-align: center;
+    background-color:#fff;
+
+}
+
+.shaidan .phone{
+    position: absolute;
+    bottom: 0;
+    left: 3.125%;
+    right: 3.125%;
+    bottom: 2.5%;
+    margin: 0 auto;
+    width: 93.75%;
+}
+.shaidan .phone p{
+    color: #fefefe;
+    font-size: 1.4rem;
+    text-align: center;
+    padding: 2.8% 0;
+}
+.shaidan .phone p b{
+    font-style: normal;
+    color: #fcd500;
+}
+.shaidan .phone .phone_txt{
+    background: url(../images/phone_icon.jpg) no-repeat 3% center /4.33% #FFFFFF ;
+    padding: 0 0 0 10%;
+    width: 90%;
+    line-height: 3.9rem;
+    border-radius:4px;
+    -moz-border-radius:4px;
+    -webkit-border-radius:4px;
+    -o-border-radius:4px;
+}
+.shaidan .phone .phone_txt .text{
+    color: #666666;
+    font-size: 1.2rem;
+    border: 0 none;
+}
+.shaidan .phone .phone_txt a{
+    display: inline-block;
+    width: 28.3%;
+    float: right;
+    color: #ffffff;
+    font-size: 1.3rem;
+    background: #f00f4f;
+    text-align: center;
+    border-radius:0 4px 4px 0;
+    -moz-border-radius:0 4px 4px 0;
+    -webkit-border-radius:0 4px 4px 0;
+    -o-border-radius:0 4px 4px 0;
+}
+/*ɹ������*/
+.shaidan1{
+    padding-bottom:8%;
+}
+
+/***************************白品斌要求的晒单有礼样式***********************************/
+.webuploader-element-invisible {
+    position: absolute !important;
+    clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
+    clip: rect(1px,1px,1px,1px);
+}
+.webuploader-pick-disable {
+    opacity: 0.6;
+    pointer-events:none;
+}
+/*以上是插件带的样式剩下的*/
+.uploader-demo{
+    position: relative;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+    border:2px solid #FDA427;
+    overflow: hidden;
+    margin-bottom:3%;
+    text-align:center;
+    background:url("../images/shaidan6.png") repeat center;
+}
+.uploader-demo.big{
+    width:78.67%;
+    float:left;
+}
+.uploader-demo.small{
+    width:51%;
+    float:right;
+    margin-right:6%;
+}
+.uploader-list .file-item{
+    position: absolute;
+    width:100%;
+    height:100%;
+    top:0;
+    left:0;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+    overflow: hidden;
+    z-index:10;
+}
+.uploader-list .file-item div{
+    display: none;
+}
+.uploader-list .file-item p{
+    display: none;
+}
+.filePicker{
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+    overflow: hidden;
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    z-index:100;
+}
+
+.webuploader-pick{
+    width:70%;
+    height:8rem;
+    color:#fff;
+    text-align:center;
+    position: absolute;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    margin:auto;
+}
+
+.uploader-list .file-item img{
+    width:100%;
+}
+
+
+
+
+
+
+

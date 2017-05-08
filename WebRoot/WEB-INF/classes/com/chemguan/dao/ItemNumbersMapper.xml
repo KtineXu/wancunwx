@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "http://mybatis.org/dtd/mybatis-3-mapper.dtd" "mybatis-3-mapper.dtd" >
+<mapper namespace = "com.chemguan.dao.ItemNumbersDao">
+
+	<!-- 查询所有 -->
+	<select id = "findAllItemNumbers" resultType="com.chemguan.entity.ItemNumbers">
+		select * from ItemNumbers 
+	</select>
+	<!-- 根据ID修改-->
+	<select id = "updateItemNumbers" resultType = "com.chemguan.entity.ItemNumbers">
+		update ItemNumbers set 
+		ex-factoryDate = #{ex_factoryDate},
+		expirationDate = #{expirationDate},
+		itemNo = #{itemNo},
+		productImgURL = #{productImgURL},
+		productName = #{productName},
+		qcodeURL =#{qcodeURL},
+		regDate = #{regDate},
+		state = #{state}
+		 where id = #{id}
+	</select>
+	<!-- 新增信息 -->
+	<insert id = "addItemNumbers" parameterType="com.chemguan.entity.ItemNumbers">
+		insert into ItemNumbers (ex-factoryDate,expirationDate,itemNo,productImgURL,productName,qcodeURL,regDate,state)
+		 values 
+		 (#{ex-factoryDate},#{expirationDate},#{itemNo},#{productImgURL}
+		,#{productName},#{qcodeURL},#{regDate},#{state})
+	</insert>
+	<!-- 根据ID删除商品信息 -->
+	<delete id = "deleteItemNumbersById" parameterType="java.lang.Integer" >
+		delete from ItemNumbersById where id = #{0}
+	</delete>
+	<!-- 批量删除信息 -->
+	<delete id = "deleteItemNumbers">
+		delete from ItemNumbers where id in
+		<foreach collection="list" open="(" close=")" separator="," item="aa">#{aa}</foreach>
+	</delete>
+	<!-- 根据ID查询信息 -->
+	<select id = "findItemNumbersById" resultType = "com.chemguan.entity.ItemNumbers">
+		select * from ItemNumbers where id = #{0}
+	</select>
+		
+		
+</mapper>

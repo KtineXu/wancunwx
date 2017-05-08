@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "http://mybatis.org/dtd/mybatis-3-mapper.dtd" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.chemguan.dao.OrdersDao">
+
+	<!-- 查询所有信息 -->
+	<select id = "findAllOrders" resultType = "com.chemguan.entity.Orders">
+		select * from orders where 1=1 order by id desc
+		
+	</select>
+	
+	<!-- 新增信息 -->
+	<insert id = "addOrders" parameterType="com.chemguan.entity.Orders">
+		insert into orders (orderNumber,addDate,userID,receiver,phoneNumber,address,totalScore,totlePrice,courierName,courierNumber,paytime) values
+		(#{orderNumber},#{addDate},#{userID},#{receiver},#{phoneNumber},#{address},#{totalScore},#{totlePrice},#{courierName},#{courierNumber},#{paytime})
+	</insert>
+	
+	<!-- 根据ID查询信息 -->
+	<select id = "findOrdersById" resultType = "com.chemguan.entity.Orders">
+		select * from orders where id = #{0}
+	</select>
+	
+	<!-- 根据ID修改信息 -->
+	<update id ="updateOrdersById">
+		update orders set orderNumber = #{orderNumber},addDate = #{addDate},userID = #{userID},receiver = #{receiver},phoneNumber = #{phoneNumber}
+		,address = #{address},totalScore = #{totalScore},totlePrice = #{totlePrice},courierName = #{courierName},courierNumber = #{courierNumber},paytime=#{paytime} where id = #{id}
+		
+	</update>
+	
+	<!-- 根据ID删除信息 -->
+	<delete id = "deleteOrdersById" parameterType="java.lang.Integer">
+		delete from orders where id = #{0}
+	</delete>
+	
+	<!-- 批量删除信息 -->
+	<delete id = "deleteOrders">
+		delete from orders where id in
+		<foreach collection="list" open="(" close=")" separator="," item="aa">#{aa}</foreach>
+	</delete>
+	
+	<!-- 根据订单编号查询信息 -->
+	<select id = "findOrdersByordernum" resultType = "com.chemguan.entity.Orders">
+		select * from orders where orderNumber = #{0}
+	</select>
+</mapper>

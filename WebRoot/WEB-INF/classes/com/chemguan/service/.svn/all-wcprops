@@ -1,0 +1,125 @@
+K 25
+svn:wc:ra_dav:version-url
+V 133
+/svn/%E9%94%A6%E5%89%8D%E7%A8%8B/!svn/ver/169/%E7%A8%8B%E5%BA%8F%E4%BB%A3%E7%A0%81%E6%96%B0/jinqiancheng_new/src/com/chemguan/service
+END
+PageImageService.java
+K 25
+svn:wc:ra_dav:version-url
+V 155
+/svn/%E9%94%A6%E5%89%8D%E7%A8%8B/!svn/ver/167/%E7%A8%8B%E5%BA%8F%E4%BB%A3%E7%A0%81%E6%96%B0/jinqiancheng_new/src/com/chemguan/service/PageImageService.java
+END
+ProductService.java
+K 25
+svn:wc:ra_dav:version-url
+V 153
+/svn/%E9%94%A6%E5%89%8D%E7%A8%8B/!svn/ver/161/%E7%A8%8B%E5%BA%8F%E4%BB%A3%E7%A0%81%E6%96%B0/jinqiancheng_new/src/com/chemguan/service/ProductService.java
+END
+ColumnsService.java
+K 25
+svn:wc:ra_dav:version-url
+V 153
+/svn/%E9%94%A6%E5%89%8D%E7%A8%8B/!svn/ver/155/%E7%A8%8B%E5%BA%8F%E4%BB%A3%E7%A0%81%E6%96%B0/jinqiancheng_new/src/com/chemguan/service/ColumnsService.java
+END
+ProductTypeService.java
+K 25
+svn:wc:ra_dav:version-url
+V 157
+/svn/%E9%94%A6%E5%89%8D%E7%A8%8B/!svn/ver/161/%E7%A8%8B%E5%BA%8F%E4%BB%A3%E7%A0%81%E6%96%B0/jinqiancheng_new/src/com/chemguan/service/ProductTypeService.java
+END
+WorksCommentService.java
+K 25
+svn:wc:ra_dav:version-url
+V 158
+/svn/%E9%94%A6%E5%89%8D%E7%A8%8B/!svn/ver/155/%E7%A8%8B%E5%BA%8F%E4%BB%A3%E7%A0%81%E6%96%B0/jinqiancheng_new/src/com/chemguan/service/WorksCommentService.java
+END
+OrderConfirmService.java
+K 25
+svn:wc:ra_dav:version-url
+V 158
+/svn/%E9%94%A6%E5%89%8D%E7%A8%8B/!svn/ver/155/%E7%A8%8B%E5%BA%8F%E4%BB%A3%E7%A0%81%E6%96%B0/jinqiancheng_new/src/com/chemguan/service/OrderConfirmService.java
+END
+ItemNumbersService.java
+K 25
+svn:wc:ra_dav:version-url
+V 157
+/svn/%E9%94%A6%E5%89%8D%E7%A8%8B/!svn/ver/155/%E7%A8%8B%E5%BA%8F%E4%BB%A3%E7%A0%81%E6%96%B0/jinqiancheng_new/src/com/chemguan/service/ItemNumbersService.java
+END
+ScoreRecordsService.java
+K 25
+svn:wc:ra_dav:version-url
+V 158
+/svn/%E9%94%A6%E5%89%8D%E7%A8%8B/!svn/ver/155/%E7%A8%8B%E5%BA%8F%E4%BB%A3%E7%A0%81%E6%96%B0/jinqiancheng_new/src/com/chemguan/service/ScoreRecordsService.java
+END
+OrdersService.java
+K 25
+svn:wc:ra_dav:version-url
+V 152
+/svn/%E9%94%A6%E5%89%8D%E7%A8%8B/!svn/ver/155/%E7%A8%8B%E5%BA%8F%E4%BB%A3%E7%A0%81%E6%96%B0/jinqiancheng_new/src/com/chemguan/service/OrdersService.java
+END
+OrderProductsService.java
+K 25
+svn:wc:ra_dav:version-url
+V 159
+/svn/%E9%94%A6%E5%89%8D%E7%A8%8B/!svn/ver/155/%E7%A8%8B%E5%BA%8F%E4%BB%A3%E7%A0%81%E6%96%B0/jinqiancheng_new/src/com/chemguan/service/OrderProductsService.java
+END
+UsersService.java
+K 25
+svn:wc:ra_dav:version-url
+V 151
+/svn/%E9%94%A6%E5%89%8D%E7%A8%8B/!svn/ver/155/%E7%A8%8B%E5%BA%8F%E4%BB%A3%E7%A0%81%E6%96%B0/jinqiancheng_new/src/com/chemguan/service/UsersService.java
+END
+RepairRecordsService.java
+K 25
+svn:wc:ra_dav:version-url
+V 159
+/svn/%E9%94%A6%E5%89%8D%E7%A8%8B/!svn/ver/155/%E7%A8%8B%E5%BA%8F%E4%BB%A3%E7%A0%81%E6%96%B0/jinqiancheng_new/src/com/chemguan/service/RepairRecordsService.java
+END
+MyOrdersService.java
+K 25
+svn:wc:ra_dav:version-url
+V 154
+/svn/%E9%94%A6%E5%89%8D%E7%A8%8B/!svn/ver/155/%E7%A8%8B%E5%BA%8F%E4%BB%A3%E7%A0%81%E6%96%B0/jinqiancheng_new/src/com/chemguan/service/MyOrdersService.java
+END
+ForumReplyService.java
+K 25
+svn:wc:ra_dav:version-url
+V 156
+/svn/%E9%94%A6%E5%89%8D%E7%A8%8B/!svn/ver/155/%E7%A8%8B%E5%BA%8F%E4%BB%A3%E7%A0%81%E6%96%B0/jinqiancheng_new/src/com/chemguan/service/ForumReplyService.java
+END
+WorksService.java
+K 25
+svn:wc:ra_dav:version-url
+V 151
+/svn/%E9%94%A6%E5%89%8D%E7%A8%8B/!svn/ver/155/%E7%A8%8B%E5%BA%8F%E4%BB%A3%E7%A0%81%E6%96%B0/jinqiancheng_new/src/com/chemguan/service/WorksService.java
+END
+RepairProgressService.java
+K 25
+svn:wc:ra_dav:version-url
+V 160
+/svn/%E9%94%A6%E5%89%8D%E7%A8%8B/!svn/ver/155/%E7%A8%8B%E5%BA%8F%E4%BB%A3%E7%A0%81%E6%96%B0/jinqiancheng_new/src/com/chemguan/service/RepairProgressService.java
+END
+ManagerService.java
+K 25
+svn:wc:ra_dav:version-url
+V 153
+/svn/%E9%94%A6%E5%89%8D%E7%A8%8B/!svn/ver/155/%E7%A8%8B%E5%BA%8F%E4%BB%A3%E7%A0%81%E6%96%B0/jinqiancheng_new/src/com/chemguan/service/ManagerService.java
+END
+IntegralMallService.java
+K 25
+svn:wc:ra_dav:version-url
+V 158
+/svn/%E9%94%A6%E5%89%8D%E7%A8%8B/!svn/ver/155/%E7%A8%8B%E5%BA%8F%E4%BB%A3%E7%A0%81%E6%96%B0/jinqiancheng_new/src/com/chemguan/service/IntegralMallService.java
+END
+ForumsService.java
+K 25
+svn:wc:ra_dav:version-url
+V 152
+/svn/%E9%94%A6%E5%89%8D%E7%A8%8B/!svn/ver/155/%E7%A8%8B%E5%BA%8F%E4%BB%A3%E7%A0%81%E6%96%B0/jinqiancheng_new/src/com/chemguan/service/ForumsService.java
+END
+NewsService.java
+K 25
+svn:wc:ra_dav:version-url
+V 150
+/svn/%E9%94%A6%E5%89%8D%E7%A8%8B/!svn/ver/169/%E7%A8%8B%E5%BA%8F%E4%BB%A3%E7%A0%81%E6%96%B0/jinqiancheng_new/src/com/chemguan/service/NewsService.java
+END

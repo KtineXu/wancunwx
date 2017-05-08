@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "http://mybatis.org/dtd/mybatis-3-mapper.dtd" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.chemguan.dao.ProductsDao">
+
+	<!-- 查询所有信息 -->
+	<select id = "findAllProducts" resultType = "com.chemguan.entity.Products">
+		select * from products where 1=1 order by id desc
+		
+	</select>
+	
+	<!-- 新增信息 -->
+	<insert id = "addProducts" parameterType="com.chemguan.entity.Products">
+		insert into products (productName,imgURL,price,addDate,columnID,visitCount,score,description,detail,manufactureDate,registrationDate,serviceDate,serialNumber,serviceFlag) values
+		(#{productName},#{imgURL},#{price},#{addDate},#{columnID},#{visitCount},#{score},#{description},#{detail},#{manufactureDate},#{registrationDate},#{serviceDate},#{serialNumber},#{serviceFlag})
+	</insert>
+	
+	<!-- 根据ID查询信息 -->
+	<select id = "findProductsById" resultType = "com.chemguan.entity.Products">
+		select * from products where id = #{0}
+	</select>
+	
+	<!-- 根据ID修改信息 -->
+	<update id ="updateProductsById">
+		update products set productName = #{productName},imgURL = #{imgURL},price = #{price},addDate = #{addDate},columnID = #{columnID}
+		,visitCount = #{visitCount},score = #{score},description = #{description},detail = #{detail},manufactureDate=#{manufactureDate},registrationDate=#{registrationDate},serviceDate=#{serviceDate},serialNumber=#{serialNumber},serviceFlag=#{serviceFlag} where id = #{id}
+		
+	</update>
+	
+	<!-- 根据ID删除信息 -->
+	<delete id = "deleteProductsById" parameterType="java.lang.Integer">
+		delete from products where id = #{0}
+	</delete>
+	
+	<!-- 批量删除信息 -->
+	<delete id = "deleteProducts">
+		delete from products where id in
+		<foreach collection="list" open="(" close=")" separator="," item="aa">#{aa}</foreach>
+	</delete>
+	
+	<!-- 根据商品名称查询商品信息 -->
+	<select id="findByProductsName" parameterType="java.lang.String" resultType="com.chemguan.entity.Products">
+		select * from products p where p.productName = #{name} 
+	</select>
+	
+	
+	<!-- 根据延保单号查询产品 -->
+	<select id = "findProductsByseri" resultType = "com.chemguan.entity.Products">
+		select * from products where serialNumber=#{0}		
+	</select>
+	
+	<!-- 后台分页查询 -->
+	<select id="findByPageBean" resultType ="com.chemguan.entity.Products" parameterType="java.util.Map">
+		select * from products 
+		<if test="start != null">
+			limit #{start},4
+		</if>
+	</select>
+	
+</mapper>

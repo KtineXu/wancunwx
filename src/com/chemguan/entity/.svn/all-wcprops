@@ -1,0 +1,179 @@
+K 25
+svn:wc:ra_dav:version-url
+V 132
+/svn/%E9%94%A6%E5%89%8D%E7%A8%8B/!svn/ver/158/%E7%A8%8B%E5%BA%8F%E4%BB%A3%E7%A0%81%E6%96%B0/jinqiancheng_new/src/com/chemguan/entity
+END
+OrderProducts.java
+K 25
+svn:wc:ra_dav:version-url
+V 151
+/svn/%E9%94%A6%E5%89%8D%E7%A8%8B/!svn/ver/155/%E7%A8%8B%E5%BA%8F%E4%BB%A3%E7%A0%81%E6%96%B0/jinqiancheng_new/src/com/chemguan/entity/OrderProducts.java
+END
+WorksAndCommon.java
+K 25
+svn:wc:ra_dav:version-url
+V 152
+/svn/%E9%94%A6%E5%89%8D%E7%A8%8B/!svn/ver/155/%E7%A8%8B%E5%BA%8F%E4%BB%A3%E7%A0%81%E6%96%B0/jinqiancheng_new/src/com/chemguan/entity/WorksAndCommon.java
+END
+Users.java
+K 25
+svn:wc:ra_dav:version-url
+V 143
+/svn/%E9%94%A6%E5%89%8D%E7%A8%8B/!svn/ver/155/%E7%A8%8B%E5%BA%8F%E4%BB%A3%E7%A0%81%E6%96%B0/jinqiancheng_new/src/com/chemguan/entity/Users.java
+END
+PageBean.java
+K 25
+svn:wc:ra_dav:version-url
+V 146
+/svn/%E9%94%A6%E5%89%8D%E7%A8%8B/!svn/ver/155/%E7%A8%8B%E5%BA%8F%E4%BB%A3%E7%A0%81%E6%96%B0/jinqiancheng_new/src/com/chemguan/entity/PageBean.java
+END
+Products.java
+K 25
+svn:wc:ra_dav:version-url
+V 146
+/svn/%E9%94%A6%E5%89%8D%E7%A8%8B/!svn/ver/155/%E7%A8%8B%E5%BA%8F%E4%BB%A3%E7%A0%81%E6%96%B0/jinqiancheng_new/src/com/chemguan/entity/Products.java
+END
+RepairRecords.java
+K 25
+svn:wc:ra_dav:version-url
+V 151
+/svn/%E9%94%A6%E5%89%8D%E7%A8%8B/!svn/ver/155/%E7%A8%8B%E5%BA%8F%E4%BB%A3%E7%A0%81%E6%96%B0/jinqiancheng_new/src/com/chemguan/entity/RepairRecords.java
+END
+ForumReply.java
+K 25
+svn:wc:ra_dav:version-url
+V 148
+/svn/%E9%94%A6%E5%89%8D%E7%A8%8B/!svn/ver/155/%E7%A8%8B%E5%BA%8F%E4%BB%A3%E7%A0%81%E6%96%B0/jinqiancheng_new/src/com/chemguan/entity/ForumReply.java
+END
+MyOrders.java
+K 25
+svn:wc:ra_dav:version-url
+V 146
+/svn/%E9%94%A6%E5%89%8D%E7%A8%8B/!svn/ver/155/%E7%A8%8B%E5%BA%8F%E4%BB%A3%E7%A0%81%E6%96%B0/jinqiancheng_new/src/com/chemguan/entity/MyOrders.java
+END
+Works.java
+K 25
+svn:wc:ra_dav:version-url
+V 143
+/svn/%E9%94%A6%E5%89%8D%E7%A8%8B/!svn/ver/155/%E7%A8%8B%E5%BA%8F%E4%BB%A3%E7%A0%81%E6%96%B0/jinqiancheng_new/src/com/chemguan/entity/Works.java
+END
+RepairProgress.java
+K 25
+svn:wc:ra_dav:version-url
+V 152
+/svn/%E9%94%A6%E5%89%8D%E7%A8%8B/!svn/ver/155/%E7%A8%8B%E5%BA%8F%E4%BB%A3%E7%A0%81%E6%96%B0/jinqiancheng_new/src/com/chemguan/entity/RepairProgress.java
+END
+Index.java
+K 25
+svn:wc:ra_dav:version-url
+V 143
+/svn/%E9%94%A6%E5%89%8D%E7%A8%8B/!svn/ver/155/%E7%A8%8B%E5%BA%8F%E4%BB%A3%E7%A0%81%E6%96%B0/jinqiancheng_new/src/com/chemguan/entity/Index.java
+END
+WorksPand.java
+K 25
+svn:wc:ra_dav:version-url
+V 147
+/svn/%E9%94%A6%E5%89%8D%E7%A8%8B/!svn/ver/155/%E7%A8%8B%E5%BA%8F%E4%BB%A3%E7%A0%81%E6%96%B0/jinqiancheng_new/src/com/chemguan/entity/WorksPand.java
+END
+DetailAndComment.java
+K 25
+svn:wc:ra_dav:version-url
+V 154
+/svn/%E9%94%A6%E5%89%8D%E7%A8%8B/!svn/ver/155/%E7%A8%8B%E5%BA%8F%E4%BB%A3%E7%A0%81%E6%96%B0/jinqiancheng_new/src/com/chemguan/entity/DetailAndComment.java
+END
+WorksAndDesigner.java
+K 25
+svn:wc:ra_dav:version-url
+V 154
+/svn/%E9%94%A6%E5%89%8D%E7%A8%8B/!svn/ver/155/%E7%A8%8B%E5%BA%8F%E4%BB%A3%E7%A0%81%E6%96%B0/jinqiancheng_new/src/com/chemguan/entity/WorksAndDesigner.java
+END
+Manager.java
+K 25
+svn:wc:ra_dav:version-url
+V 145
+/svn/%E9%94%A6%E5%89%8D%E7%A8%8B/!svn/ver/155/%E7%A8%8B%E5%BA%8F%E4%BB%A3%E7%A0%81%E6%96%B0/jinqiancheng_new/src/com/chemguan/entity/Manager.java
+END
+UserScore.java
+K 25
+svn:wc:ra_dav:version-url
+V 147
+/svn/%E9%94%A6%E5%89%8D%E7%A8%8B/!svn/ver/155/%E7%A8%8B%E5%BA%8F%E4%BB%A3%E7%A0%81%E6%96%B0/jinqiancheng_new/src/com/chemguan/entity/UserScore.java
+END
+IntegralMall.java
+K 25
+svn:wc:ra_dav:version-url
+V 150
+/svn/%E9%94%A6%E5%89%8D%E7%A8%8B/!svn/ver/155/%E7%A8%8B%E5%BA%8F%E4%BB%A3%E7%A0%81%E6%96%B0/jinqiancheng_new/src/com/chemguan/entity/IntegralMall.java
+END
+Forums.java
+K 25
+svn:wc:ra_dav:version-url
+V 144
+/svn/%E9%94%A6%E5%89%8D%E7%A8%8B/!svn/ver/155/%E7%A8%8B%E5%BA%8F%E4%BB%A3%E7%A0%81%E6%96%B0/jinqiancheng_new/src/com/chemguan/entity/Forums.java
+END
+News.java
+K 25
+svn:wc:ra_dav:version-url
+V 142
+/svn/%E9%94%A6%E5%89%8D%E7%A8%8B/!svn/ver/158/%E7%A8%8B%E5%BA%8F%E4%BB%A3%E7%A0%81%E6%96%B0/jinqiancheng_new/src/com/chemguan/entity/News.java
+END
+Columns.java
+K 25
+svn:wc:ra_dav:version-url
+V 145
+/svn/%E9%94%A6%E5%89%8D%E7%A8%8B/!svn/ver/155/%E7%A8%8B%E5%BA%8F%E4%BB%A3%E7%A0%81%E6%96%B0/jinqiancheng_new/src/com/chemguan/entity/Columns.java
+END
+RepairUser.java
+K 25
+svn:wc:ra_dav:version-url
+V 148
+/svn/%E9%94%A6%E5%89%8D%E7%A8%8B/!svn/ver/155/%E7%A8%8B%E5%BA%8F%E4%BB%A3%E7%A0%81%E6%96%B0/jinqiancheng_new/src/com/chemguan/entity/RepairUser.java
+END
+RepairProduct.java
+K 25
+svn:wc:ra_dav:version-url
+V 151
+/svn/%E9%94%A6%E5%89%8D%E7%A8%8B/!svn/ver/155/%E7%A8%8B%E5%BA%8F%E4%BB%A3%E7%A0%81%E6%96%B0/jinqiancheng_new/src/com/chemguan/entity/RepairProduct.java
+END
+VideoAndUser.java
+K 25
+svn:wc:ra_dav:version-url
+V 150
+/svn/%E9%94%A6%E5%89%8D%E7%A8%8B/!svn/ver/155/%E7%A8%8B%E5%BA%8F%E4%BB%A3%E7%A0%81%E6%96%B0/jinqiancheng_new/src/com/chemguan/entity/VideoAndUser.java
+END
+WorksComment.java
+K 25
+svn:wc:ra_dav:version-url
+V 150
+/svn/%E9%94%A6%E5%89%8D%E7%A8%8B/!svn/ver/155/%E7%A8%8B%E5%BA%8F%E4%BB%A3%E7%A0%81%E6%96%B0/jinqiancheng_new/src/com/chemguan/entity/WorksComment.java
+END
+OrderConfirm.java
+K 25
+svn:wc:ra_dav:version-url
+V 150
+/svn/%E9%94%A6%E5%89%8D%E7%A8%8B/!svn/ver/155/%E7%A8%8B%E5%BA%8F%E4%BB%A3%E7%A0%81%E6%96%B0/jinqiancheng_new/src/com/chemguan/entity/OrderConfirm.java
+END
+ItemNumbers.java
+K 25
+svn:wc:ra_dav:version-url
+V 149
+/svn/%E9%94%A6%E5%89%8D%E7%A8%8B/!svn/ver/155/%E7%A8%8B%E5%BA%8F%E4%BB%A3%E7%A0%81%E6%96%B0/jinqiancheng_new/src/com/chemguan/entity/ItemNumbers.java
+END
+Orderserviceproduct.java
+K 25
+svn:wc:ra_dav:version-url
+V 157
+/svn/%E9%94%A6%E5%89%8D%E7%A8%8B/!svn/ver/155/%E7%A8%8B%E5%BA%8F%E4%BB%A3%E7%A0%81%E6%96%B0/jinqiancheng_new/src/com/chemguan/entity/Orderserviceproduct.java
+END
+ScoreRecords.java
+K 25
+svn:wc:ra_dav:version-url
+V 150
+/svn/%E9%94%A6%E5%89%8D%E7%A8%8B/!svn/ver/155/%E7%A8%8B%E5%BA%8F%E4%BB%A3%E7%A0%81%E6%96%B0/jinqiancheng_new/src/com/chemguan/entity/ScoreRecords.java
+END
+Orders.java
+K 25
+svn:wc:ra_dav:version-url
+V 144
+/svn/%E9%94%A6%E5%89%8D%E7%A8%8B/!svn/ver/155/%E7%A8%8B%E5%BA%8F%E4%BB%A3%E7%A0%81%E6%96%B0/jinqiancheng_new/src/com/chemguan/entity/Orders.java
+END

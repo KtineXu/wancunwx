@@ -1,0 +1,300 @@
+package com.chemguan.controller;
+
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+
+import com.chemguan.entity.Columns;
+import com.chemguan.entity.News;
+import com.chemguan.entity.PageBean;
+import com.chemguan.service.ColumnsService;
+import com.chemguan.service.NewsService;
+import com.chemguan.tool.Tools;
+
+
+/**
+ * 新闻管理类
+ * @author guosheng
+ *
+ */
+@Controller
+public class NewsController {
+
+	@Resource
+	private NewsService newsServiceImpl;
+	@Resource 
+	private ColumnsService columnsServiceImpl;
+	@Resource
+	private Tools tools;
+	
+	
+	/**
+	 * 新增一个方法，把新闻所属的栏目全部查出来，传到页面在下拉框中显示出来
+	 */
+	public List<Columns> getNewsType(){
+		List<Columns> columnsList = new ArrayList<Columns>();
+		columnsList = columnsServiceImpl.findAllColumns();
+		System.out.println(columnsList);
+		return columnsList;
+	}
+	
+	/**
+	 * 上传图片的方法
+	 */
+	public String saveImage(HttpServletRequest request,String image){
+		Date d=new Date();
+		String url = "";
+			MultipartHttpServletRequest mreq = (MultipartHttpServletRequest)request;
+			MultipartFile file = mreq.getFile(image);
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss"); 
+			String fileName = file.getOriginalFilename();
+			if(!fileName.equals("")){
+			try {
+				String fileurl=request.getSession().getServletContext().getRealPath("upload")+"/"+sdf.format(d)+fileName.substring(fileName.lastIndexOf('.'));
+				FileOutputStream fos = new FileOutputStream(fileurl);				
+				url ="upload"+"/"+sdf.format(d)+fileName.substring(fileName.lastIndexOf('.'));
+				System.out.println(fileurl);
+				fos.write(file.getBytes());
+				fos.flush();
+				fos.close();
+			}catch (IOException e) {  
+				System.out.println("失败");
+			}
+		}
+		return url;
+	}
+	
+	/**
+	 * 新增一条新闻
+	 * @throws Exception 
+	 */
+	@RequestMapping("addNews.do")
+	public String addNews(HttpServletResponse response,HttpServletRequest request) throws Exception{
+		String title = request.getParameter("title");
+		String description = request.getParameter("description");
+		String detail = request.getParameter("content");
+		String columnId = request.getParameter("columnId");
+		Date d=new Date();
+		News news = new News();
+			MultipartHttpServletRequest mreq = (MultipartHttpServletRequest)request;
+			MultipartFile file = mreq.getFile("image");
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss"); 
+			String fileName = file.getOriginalFilename();
+			if(!fileName.equals("")){
+			try {
+				String fileurl=request.getSession().getServletContext().getRealPath("upload")+"/"+sdf.format(d)+fileName.substring(fileName.lastIndexOf('.'));
+				FileOutputStream fos = new FileOutputStream(fileurl);				
+				news.setImgURL("upload"+"/"+sdf.format(d)+fileName.substring(fileName.lastIndexOf('.')));
+				System.out.println(fileurl);
+				fos.write(file.getBytes());
+				fos.flush();
+				fos.close();
+			}catch (IOException e) {  
+				System.out.println("失败");
+			}
+			}
+		news.setAddDate(tools.dataToString(new Date()));
+		news.setColumnId(Integer.parseInt(columnId));
+		news.setDescription(description);
+		news.setDetail(detail);
+		news.setTitle(title);
+		news.setClickCount(0);
+		newsServiceImpl.addNews(news);
+		return "findAllNews.do";
+	}
+	/**
+	 * 页面跳转到新增页面
+	 */
+	@RequestMapping("addNewsUI.do")
+	public String addNewsUI(HttpServletResponse response,HttpServletRequest request){
+		request.setAttribute("columnsList", this.getNewsType());
+		return "chemguanpanel/addNews.jsp";
+	}
+	
+	/**
+	 * 查询所有的新闻
+	 */
+	@RequestMapping("findAllNews.do")
+	public String findAllNews(HttpServletResponse response,HttpServletRequest request){
+		List<News> list = new ArrayList<News>();
+		list =  newsServiceImpl.findAllNews();
+//		private int currentPage;//当前页码
+//		private int recordCount;//总记录数
+//		private int pageSize;//一页显示多少条数据
+//		private List recordList;//页面要显示的数据集合
+		int currentPage = 1;
+		if(null != request.getParameter("currentPage")){
+			currentPage =Integer.parseInt(request.getParameter("currentPage"));
+		}
+		int recordCount = list.size();
+		int pageSize = 2;
+		Map<String,Integer> map = new HashMap<String, Integer>();
+		map.put("start", (currentPage-1)*2);
+		List<News> recordList = newsServiceImpl.findByPageBean(map);
+		PageBean pb = new PageBean(currentPage,recordCount,pageSize,recordList);
+		
+		
+		
+		request.setAttribute("columnsList", this.getNewsType());
+		request.setAttribute("pageBean",pb);
+		//request.setAttribute("list", list);
+		return "chemguanpanel/news.jsp";
+	}
+	
+	/**
+	 * 查询单个新闻信息
+	 */
+	@RequestMapping("findNewsById.do")
+	public String findNewsById(HttpServletResponse response,HttpServletRequest request){
+		String id = request.getParameter("id");
+		News news = newsServiceImpl.findNewsById(Integer.parseInt(id));
+		request.setAttribute("columnsList", this.getNewsType());
+		request.setAttribute("news", news);
+		return "chemguanpanel/addNews.jsp";
+	}
+	
+	/**
+	 * 修改一条新闻信息
+	 * @throws Exception 
+	 */
+	@RequestMapping("updateNewsById.do")
+	public String updateNewsById(HttpServletResponse response,HttpServletRequest request) throws Exception{
+		String id = request.getParameter("id");
+		//先查询再修改
+		News news = new News();
+		news = newsServiceImpl.findNewsById(Integer.parseInt(id));
+		news.setAddDate(tools.dataToString(new Date()));
+		int columnId = Integer.parseInt(request.getParameter("columnId"));
+		news.setColumnId(columnId);
+		news.setDescription(request.getParameter("description"));
+		news.setDetail(request.getParameter("content"));
+		news.setTitle(request.getParameter("title"));
+		news.setClickCount(Integer.parseInt(request.getParameter("clickCount")));
+		String image = this.saveImage(request,"image");
+		if(image != null && !image.equals("")){
+			news.setImgURL(image);
+		}
+		newsServiceImpl.updateNews(news);
+		return "findAllNews.do";
+	}
+	
+	/**
+	 * 删除一条新闻
+	 */
+	@RequestMapping("deleteNewsById.do")
+	public String deleteNewsById(HttpServletResponse response,HttpServletRequest request){
+		//先查到对象，再删除对象
+		Integer id =Integer.parseInt(request.getParameter("id"));
+		News news = new News();
+		news = newsServiceImpl.findNewsById(id);
+		newsServiceImpl.deleteNewsById(news.getId());
+		return "findAllNews.do";
+	}
+	
+	/**
+	 * 批量删除新闻
+	 */
+	@RequestMapping("deleteNews.do")
+	public String deleteNews(HttpServletResponse response,HttpServletRequest request,String map){
+		List list = tools.split(map);
+		newsServiceImpl.deleteNews(list);
+		return "findAllNews.do";
+	}
+	
+	
+	
+	
+	//前端页面
+	
+	
+	/**
+	 * 向页面提供新闻信息集合
+	 * @return
+	 */
+	@ModelAttribute("newsList")
+	public List<News> getNewsList(){
+		List<News> newsList = new ArrayList<News>();
+		Map<String,Integer> map = new HashMap<String,Integer>();
+		map.put("start", 1);
+		newsList = newsServiceImpl.findByPageBean(map);
+		return newsList;
+	}
+	
+	/**
+	 * 向页面提供一个新闻对象
+	 */
+	@ModelAttribute("news")
+	public News getNews(){
+		News news = new News();
+		news = newsServiceImpl.findNewsById(18);
+		return news;
+	}
+
+	/**
+	 * 前台查询的方法
+	 */
+	@RequestMapping("behindFindAllNews.do")
+	public String behindFindAllNews(HttpServletResponse response,HttpServletRequest request){
+		List<News> list = new ArrayList<News>();
+		list =  newsServiceImpl.findAllNews();
+		request.setAttribute("list", list);
+		return "news.jsp";
+	}
+	
+	/**
+	 * 前台查询单个新闻的方法
+	 */
+	@RequestMapping("behindFindById.do")
+	public String behindFindById(HttpServletResponse response,HttpServletRequest request,Integer columnId){
+		Integer id = Integer.parseInt(request.getParameter("id"));
+		News news = new News();
+		news = newsServiceImpl.findNewsById(id);
+		request.setAttribute("columnId",columnId);
+		request.setAttribute("news", news);
+		return "newsDetail.jsp";
+	}
+	
+	/**
+	 * 根据columnId查询
+	 */
+	@RequestMapping("findManyByColumnId.do")
+	public String findManyByColumnId(HttpServletResponse response,HttpServletRequest request){
+		Integer columnId = Integer.parseInt(request.getParameter("columnId"));
+		List<News> list = newsServiceImpl.findManyByColumnId(columnId);
+		request.setAttribute("columnId", columnId);
+		request.setAttribute("list", list);
+		return "newsList.jsp";
+	}
+	
+	/**
+	 * 根据columnId查询系统公告
+	 */
+	@RequestMapping("findManyBysystem.do")
+	public String findManyBysystem(HttpServletResponse response,HttpServletRequest request){
+		Integer columnId = Integer.parseInt(request.getParameter("columnId"));
+		List<News> list = newsServiceImpl.findManyByColumnId(columnId);
+		request.setAttribute("columnId", columnId);
+		request.setAttribute("list", list);
+		return "announcement.jsp";
+	}
+	
+	/**
+	 *根据column 
+	 */
+	
+}

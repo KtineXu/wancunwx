@@ -1,0 +1,38 @@
+package com.chemguan.controller;
+
+import java.util.Date;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.chemguan.entity.Columns;
+import com.chemguan.entity.News;
+import com.chemguan.service.ColumnsService;
+import com.chemguan.service.NewsService;
+
+@Controller
+public class ColumnController {
+	
+	@Resource
+	private ColumnsService columnsService;
+//	
+//	@RequestMapping("AddColumn.do")
+//	public String AddColumn(HttpServletResponse response,HttpServletRequest request){
+//		
+//		String parentColumnId = request.getParameter("parentColumnId");
+//		String columnName = request.getParameter("columnName");
+//		Columns column=new Columns();
+//		column.setParentColumnId(Integer.parseInt(parentColumnId));
+//		column.setColumnName(columnName);
+//		columnsService.addColumns(column);
+//		System.out.println("dkdkd");
+//		return "chemguanpanel/addContent.jsp";
+//				
+//	}
+//	
+	
+}

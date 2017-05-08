@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "http://mybatis.org/dtd/mybatis-3-mapper.dtd" "mybatis-3-mapper.dtd" >
+<mapper namespace = "com.chemguan.dao.WorksCommentDao">
+
+	<!-- 查询所有 -->
+	<select id = "findAllWorksComment" resultType="com.chemguan.entity.WorksComment">
+		select * from WorksComment 
+	</select>
+	<!-- 根据ID评论 -->
+	<select id = "updateWorksComment" resultType = "com.chemguan.entity.WorksComment">
+		update WorksComment set addDate = #{addDate},detail = #{detail}, userId = #{userId}, worksId = #{worksId} where id = #{id}
+	</select>
+	<!-- 新增评论 -->
+	<insert id = "addWorksComment" parameterType="com.chemguan.entity.WorksComment">
+		insert into WorksComment (addDate,detail,userId,worksId) values (#{addDate},#{detail},#{userId},#{worksId})
+	</insert>
+	<!-- 根据ID删除评论 -->
+	<delete id = "deleteWorksCommentById" parameterType="java.lang.Integer" >
+		delete from WorksComment where id = #{0}
+	</delete>
+	<!-- 批量删除评论 -->
+	<delete id = "deleteWorksComment">
+		delete from WorksComment where id in
+		<foreach collection="list" open="(" close=")" separator="," item="aa">#{aa}</foreach>
+	</delete>
+	<!-- 根据ID查询 -->
+	<select id = "findWorksCommentById" resultType = "com.chemguan.entity.WorksComment">
+		select * from columns where id = #{0}
+	</select>
+	
+	<!-- 根据作品id查询所有评论  -->
+	<select id = "findWorksCommentByWorksId" resultType = "com.chemguan.entity.WorksComment">
+		select * from WorksComment where worksId = #{worksId}
+	</select>
+	
+	<!-- 根据作品id查询评论总数-->
+	<select id = "countByWorksId" resultType = "com.chemguan.entity.WorksComment">
+		select count(*) from WorksComment where worksId = #{worksId}
+	</select>
+		
+		
+</mapper>

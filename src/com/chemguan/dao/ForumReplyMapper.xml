@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "http://mybatis.org/dtd/mybatis-3-mapper.dtd" "mybatis-3-mapper.dtd" >
+<mapper namespace = "com.chemguan.dao.ForumReplyDao">
+
+	<!-- 查询所有 -->
+	<select id = "findAllForumReply" resultType="com.chemguan.entity.ForumReply">
+		select * from ForumReply
+	</select>
+	<!-- 根据ID修改-->
+	<select id = "updateForumReply" resultType = "com.chemguan.entity.ForumReply">
+		update ForumReply set 
+			addDate = #{addDate},
+			detail = #{detail},
+			forumId = #{forumId},
+			userId = #{userId}
+		where id = #{id}
+	</select>
+	<!-- 新增信息 -->
+	<insert id = "addForumReply" parameterType="com.chemguan.entity.ForumReply">
+		insert into ForumReply
+		 (addDate,detail,forumId,userId) 
+		 values 
+		 (now(),#{detail},#{forumId},#{userId})
+	</insert>
+	<!-- 根据ID删除商品信息 -->
+	<delete id = "deleteForumReplyById" parameterType="java.lang.Integer" >
+		delete from ForumReply where id = #{0}
+	</delete>
+	<!-- 批量删除信息 -->
+	<delete id = "deleteForumReply">
+		delete from ForumReply where id in
+		<foreach collection="list" open="(" close=")" separator="," item="aa">#{aa}</foreach>
+	</delete>
+	<!-- 根据ID查询信息 -->
+	<select id = "findForumReplyById" resultType = "com.chemguan.entity.ForumReply">
+		select * from ForumReply where id = #{0}
+	</select>
+		
+	
+	
+	
+	<!-- 根据论坛主题id查询信息 -->
+	<select id = "findForumReplyByforumId" resultType = "com.chemguan.entity.ForumReply">
+		select * from ForumReply where forumID = #{0}
+	</select>
+		
+</mapper>
