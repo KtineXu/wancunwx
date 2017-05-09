@@ -44,7 +44,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<header class="mui-bar mui-bar-nav report-header box-s" id="header">
 			<a href="javascript:history.go(-1)"><i class="iconfont icon-fanhui fl"></i></a>
 			<p>选择收货地址</p>
-			<span class="fr baocun"><a href="address.html">管理</a></span>			
+			<span class="fr baocun"><a href="address.jsp">管理</a></span>			
 	    </header>
 	    <div id="main" class="mui-clearfix add-address choice-address">
 	    	<div class="addlist clearfloat">
@@ -56,19 +56,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	    				</li>
 	    				<li>
 	    					<span class="moren">[默认地址]</span>北京市朝阳区XXXXXXXXXXXXXXXXXXXXXXX
-	    				</li>
-	    			</ul>
-	    		</div>
-	    	</div>
-	    	<div class="addlist clearfloat">
-	    		<div class="top clearfloat box-s">
-	    			<ul>
-	    				<li>
-	    					<span class="fl">张三</span>
-	    					<span class="fr">1355555****</span>
-	    				</li>
-	    				<li>
-	    					北京市朝阳区XXXXXXXXXXXXXXXXXXXXXXX
 	    				</li>
 	    			</ul>
 	    		</div>

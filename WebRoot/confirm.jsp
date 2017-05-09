@@ -49,7 +49,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	    	<div class="plist confirm clearfloat">
 				<ul>
 					<li class="clearfloat">
-						<a href="choice-address.html">
+						<a href="chooseAddress.jsp">
 							<i class="iconfont icon-dizhi icon-dizhitwo fl"></i>
 							<p class="fl">填写收货地址</p>
 							<i class="iconfont icon-qianjin fr"></i>
